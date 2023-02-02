@@ -125,7 +125,7 @@ sms:
     appSecret:
     sender:     # 验证码类发送人手机号通道号
     messagesender:   # 通知类发送人手机号通道号
-    signature: 湘北智造    # 签名名称
+    signature: 光华科技    # 签名名称
     login:
       templateId:   # 手机登录验证 模板ID
     reset:

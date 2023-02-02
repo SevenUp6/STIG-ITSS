@@ -1,5 +1,5 @@
 /**
- * Copyright 2016-2019 长沙湘北智造信息技术有限公司
+ *
  *
  * @version xbzz V2.0.28
  * @author 光华科技-软件研发部
@@ -41,7 +41,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
- * Copyright 2016-2019 长沙湘北智造信息技术有限公司
+ *
  *
  * @version xbzz V2.0.28
  * @author 光华科技-软件研发部
@@ -76,7 +76,7 @@ public class SmsHuaWei {
 
     /**
      *
-     * Copyright 2016-2019 长沙湘北智造信息技术有限公司
+     *
      *
      * @version xbzz V2.0.28
      * @author 光华科技-软件研发部
