@@ -18,7 +18,7 @@ public interface XjrBaseRoleMapper extends BaseMapper<XjrBaseRole> {
     List<String> getRoleIdsForUser(String userId);
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/6
     * @Param:[userId]
     * @return:java.util.List<Xjr_base_role>

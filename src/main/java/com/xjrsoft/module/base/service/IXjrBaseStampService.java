@@ -7,14 +7,14 @@ import com.xjrsoft.module.base.dto.SaveStampDto;
 import com.xjrsoft.module.base.entity.XjrBaseStamp;
 
 /**
-* @Author:湘北智造-框架开发组
+* @Author:光华科技-软件研发部
 * @Date:2020/10/26
 * @Description:工作流签章服务类
 */
 public interface IXjrBaseStampService extends IService<XjrBaseStamp> {
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/5
     * @Param:[dto, StampType:分类, EnabledMark:启用状态, StampAttributes:0私人签章 1 默认签章 2 公共签章]
     * @return:com.xjrsoft.common.page.PageOutput
@@ -23,7 +23,7 @@ public interface IXjrBaseStampService extends IService<XjrBaseStamp> {
     PageOutput getStampPageList(GetStampPageListDto dto, String userId);
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/12/24
     * @Param:[id, userId]
     * @return:boolean
@@ -32,7 +32,7 @@ public interface IXjrBaseStampService extends IService<XjrBaseStamp> {
     boolean setDefaultStamp(String id, String userId);
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/12/24
     * @Param:[id]
     * @return:boolean
@@ -41,7 +41,7 @@ public interface IXjrBaseStampService extends IService<XjrBaseStamp> {
     boolean validatePwd(String id, String password);
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/12/24
     * @Param:[dto]
     * @return:boolean
@@ -50,7 +50,7 @@ public interface IXjrBaseStampService extends IService<XjrBaseStamp> {
     boolean saveStamp(SaveStampDto dto);
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/12/24
     * @Param:[xjrBaseStamp]
     * @return:boolean
@@ -59,7 +59,7 @@ public interface IXjrBaseStampService extends IService<XjrBaseStamp> {
     boolean updateStamp(String id, SaveStampDto xjrBaseStamp);
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2021/3/16
     * @Param:[id, AuthorizeUsers]
     * @return:boolean

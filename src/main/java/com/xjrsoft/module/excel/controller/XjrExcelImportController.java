@@ -31,7 +31,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @Author:湘北智造-框架开发组
+ * @Author:光华科技-软件研发部
  * @Date:2020/11/11
  * @Description:Excel导入模板 前端控制器
  */
@@ -46,7 +46,7 @@ public class XjrExcelImportController {
     private IXjrExcelImportfiledsService excelImportfiledsService;
 
     /**
-     * @author 湘北智造-框架开发组
+     * @author 光华科技-软件研发部
      * @date:2019年10月25日
      * @url: /queryExcelImport
      * @description: 查询excel的导入按钮信息
@@ -58,7 +58,7 @@ public class XjrExcelImportController {
     }
 
     /**
-     * @author 湘北智造-框架开发组
+     * @author 光华科技-软件研发部
      * @date:2019年10月25日
      * @url: /toUpDatePage
      * @description:跳转编辑页面的数据回显
@@ -86,7 +86,7 @@ public class XjrExcelImportController {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/10
      * @Param:[id]
      * @return:com.xjrsoft.common.result.Response
@@ -101,7 +101,7 @@ public class XjrExcelImportController {
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/11
     * @Param:[]
     * @return:void
@@ -114,7 +114,7 @@ public class XjrExcelImportController {
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/11
     * @Param:[id]
     * @return:com.xjrsoft.common.result.Response
@@ -129,7 +129,7 @@ public class XjrExcelImportController {
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/11
     * @Param:[id]
     * @return:com.xjrsoft.common.result.Response
@@ -144,7 +144,7 @@ public class XjrExcelImportController {
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/11
     * @Param:[]
     * @return:void
@@ -173,7 +173,7 @@ public class XjrExcelImportController {
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/11
     * @Param:[titleDataList:列数据]
     * @return:void

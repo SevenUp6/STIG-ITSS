@@ -37,7 +37,7 @@ public class XjrLgMapController {
     private IXjrBaseDataItemDetailService detaItemService;
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/12
      * @Param:[id]
      * @return:com.xjrsoft.common.result.Response
@@ -50,7 +50,7 @@ public class XjrLgMapController {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/12
      * @Param:[id]
      * @return:com.xjrsoft.common.result.Response
@@ -64,7 +64,7 @@ public class XjrLgMapController {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/12
      * @Param:[objectId]
      * @return:com.xjrsoft.common.result.Response
@@ -77,7 +77,7 @@ public class XjrLgMapController {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/12
      * @Param:[objectId, keyword]
      * @return:com.xjrsoft.common.result.Response
@@ -91,7 +91,7 @@ public class XjrLgMapController {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/12
      * @Param:[objectId, keyword]
      * @return:com.xjrsoft.common.result.Response
@@ -104,7 +104,7 @@ public class XjrLgMapController {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/12
      * @Param:[objectId, keyword]
      * @return:com.xjrsoft.common.result.Response
@@ -118,7 +118,7 @@ public class XjrLgMapController {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/12
      * @Param:[objectId, keyword]
      * @return:com.xjrsoft.common.result.Response
@@ -131,7 +131,7 @@ public class XjrLgMapController {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/12
      * @Param:[ids]
      * @return:com.xjrsoft.common.result.Response

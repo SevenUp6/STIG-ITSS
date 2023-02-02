@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @Author:湘北智造-框架开发组
+ * @Author:光华科技-软件研发部
  * @Date:2020/11/4
  * @Description:角色控制器
  */
@@ -39,7 +39,7 @@ public class XjrBaseRoleController {
     private final IXjrBaseRoleService roleService;
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/4
     * @Param:[id]
     * @return:com.xjrsoft.common.result.Response<com.xjrsoft.module.base.entity.XjrBaseRole>
@@ -53,7 +53,7 @@ public class XjrBaseRoleController {
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/4
     * @Param:[id]
     * @return:com.xjrsoft.common.result.Response
@@ -67,7 +67,7 @@ public class XjrBaseRoleController {
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/4
     * @Param:[dto]
     * @return:com.xjrsoft.common.result.Response<com.xjrsoft.common.page.PageOutput<com.xjrsoft.module.base.entity.XjrBaseRole>>
@@ -80,7 +80,7 @@ public class XjrBaseRoleController {
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/4
     * @Param:[dto]
     * @return:com.xjrsoft.common.result.Response
@@ -93,7 +93,7 @@ public class XjrBaseRoleController {
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/4
     * @Param:[xjrBaseRole]
     * @return:com.xjrsoft.common.result.Response
@@ -106,7 +106,7 @@ public class XjrBaseRoleController {
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/4
     * @Param:[]
     * @return:com.xjrsoft.common.result.Response
@@ -135,7 +135,7 @@ public class XjrBaseRoleController {
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/5
     * @Param:[ids]
     * @return:com.xjrsoft.common.result.Response

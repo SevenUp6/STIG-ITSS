@@ -18,7 +18,7 @@ import java.util.List;
 public interface IXjrLgTypeService extends IService<XjrLgType> {
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/12
     * @Param:[id]
     * @return:boolean
@@ -27,7 +27,7 @@ public interface IXjrLgTypeService extends IService<XjrLgType> {
     boolean setMainlanguage(String id);
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/12
     * @Param:[dto]
     * @return:com.xjrsoft.common.page.PageOutput<com.xjrsoft.module.language.entity.XjrLgType>

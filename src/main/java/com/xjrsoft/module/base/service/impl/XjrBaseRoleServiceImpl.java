@@ -30,7 +30,7 @@ import java.util.List;
 public class XjrBaseRoleServiceImpl extends ServiceImpl<XjrBaseRoleMapper, XjrBaseRole> implements IXjrBaseRoleService {
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/6
     * @Param:[userId]
     * @return:java.util.List<java.lang.String>
@@ -41,7 +41,7 @@ public class XjrBaseRoleServiceImpl extends ServiceImpl<XjrBaseRoleMapper, XjrBa
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/4
     * @Param:[dto, StampType:分类, EnabledMark:启用状态, StampAttributes:0私人签章 1 默认签章 2 公共签章]
     * @return:com.xjrsoft.common.page.PageOutput<com.xjrsoft.module.base.entity.XjrBaseRole>
@@ -57,7 +57,7 @@ public class XjrBaseRoleServiceImpl extends ServiceImpl<XjrBaseRoleMapper, XjrBa
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/6
     * @Param:[userId]
     * @return:java.util.List<com.xjrsoft.module.base.entity.XjrBaseRole>
@@ -75,7 +75,7 @@ public class XjrBaseRoleServiceImpl extends ServiceImpl<XjrBaseRoleMapper, XjrBa
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2021/1/13
     * @Param:[]
     * @return:java.util.List<com.xjrsoft.module.base.entity.XjrBaseRole>

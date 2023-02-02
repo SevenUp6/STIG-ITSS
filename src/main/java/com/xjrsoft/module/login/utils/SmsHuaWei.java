@@ -2,7 +2,7 @@
  * Copyright 2016-2019 长沙湘北智造信息技术有限公司
  *
  * @version xbzz V2.0.28
- * @author 湘北智造-框架开发组
+ * @author 光华科技-软件研发部
  * @date：2019年10月12日
  * @url /db_link
  * @description：
@@ -44,7 +44,7 @@ import org.springframework.stereotype.Component;
  * Copyright 2016-2019 长沙湘北智造信息技术有限公司
  *
  * @version xbzz V2.0.28
- * @author 湘北智造-框架开发组
+ * @author 光华科技-软件研发部
  * @date：2019年10月12日
  * @description：
  *    核心方法 ：sendSmsSimple
@@ -79,7 +79,7 @@ public class SmsHuaWei {
      * Copyright 2016-2019 长沙湘北智造信息技术有限公司
      *
      * @version xbzz V2.0.28
-     * @author 湘北智造-框架开发组
+     * @author 光华科技-软件研发部
      * @date：2019年10月12日
      * @description：
      *  phone : 18111111111   必须是11位数字

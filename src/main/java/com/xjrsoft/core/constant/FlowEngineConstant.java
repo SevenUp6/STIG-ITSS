@@ -1,7 +1,7 @@
 package com.xjrsoft.core.constant;
 
 /**
-* @Author:湘北智造-框架开发组
+* @Author:光华科技-软件研发部
 * @Date:2020/10/19
 * @Description:工作流配置类
 */

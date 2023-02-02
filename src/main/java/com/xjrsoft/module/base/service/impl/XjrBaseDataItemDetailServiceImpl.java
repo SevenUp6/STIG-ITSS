@@ -32,7 +32,7 @@ public class XjrBaseDataItemDetailServiceImpl extends ServiceImpl<XjrBaseDataIte
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/12
     * @Param:[fItemId:字典分类Id, nameOrValue:字典明细项目名或项目值]
     * @return:java.util.List<com.xjrsoft.module.base.entity.XjrBaseDataItemDetail>

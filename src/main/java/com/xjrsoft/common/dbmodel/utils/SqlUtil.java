@@ -47,7 +47,7 @@ public class SqlUtil {
 
     /**
      * @return 建表SQL语句
-     * @author 湘北智造-框架开发组
+     * @author 光华科技-软件研发部
      * @date：2019年10月14日 @description：构建sqlserver数据库创建表sql
      */
     private static List<String> getSqlServerCreateTableSql(TableInfo tableInfo) {
@@ -91,7 +91,7 @@ public class SqlUtil {
 
     /**
      * @return 建表SQL语句
-     * @author 湘北智造-框架开发组
+     * @author 光华科技-软件研发部
      * @date：2019年10月14日 @description：构建mysql数据库创建表sql
      */
     private static String getMysqlCreateTableSql(TableInfo tableInfo) {

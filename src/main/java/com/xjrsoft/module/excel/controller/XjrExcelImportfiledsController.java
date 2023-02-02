@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
-* @Author:湘北智造-框架开发组
+* @Author:光华科技-软件研发部
 * @Date:2020/11/11
 * @Description:导入字段转换关系表 前端控制器
 */

@@ -62,7 +62,7 @@ public class IoUtil extends StreamUtils {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/16
      * @Param:[inStream, filePath:图片地址]
      * @return:boolean
@@ -104,7 +104,7 @@ public class IoUtil extends StreamUtils {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/10/27
      * @Param:[file]
      * @return:java.io.File

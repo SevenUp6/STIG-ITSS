@@ -712,7 +712,7 @@ public class StringUtil extends StringUtils {
     }
 
     /**
-     * @author 湘北智造-框架开发组
+     * @author 光华科技-软件研发部
      * @date:2020年6月3日
      * @description: 格式化数字
      * @param value	数字值

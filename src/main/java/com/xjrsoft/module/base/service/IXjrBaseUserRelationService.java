@@ -80,7 +80,7 @@ public interface IXjrBaseUserRelationService extends IService<XjrBaseUserRelatio
     boolean addUserRelationsForUser(String userId, Integer objectType, List<String> objectIdList, boolean isRemovingExits);
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/12/1
     * @Param:[userId]
     * @return:java.util.List<com.xjrsoft.module.base.entity.XjrBaseUserRelation>

@@ -46,7 +46,7 @@ public class XjrExcelImportServiceImpl extends ServiceImpl<XjrExcelImportMapper,
     private XjrExcelImportfiledsServiceImpl excelImportFieldService;
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/11
      * @Param:[dto, fModuleId]
      * @return:com.xjrsoft.common.page.PageOutput<com.xjrsoft.module.excel.vo.ExcelImportVo>
@@ -63,7 +63,7 @@ public class XjrExcelImportServiceImpl extends ServiceImpl<XjrExcelImportMapper,
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/11
      * @Param:[id]
      * @return:boolean
@@ -84,7 +84,7 @@ public class XjrExcelImportServiceImpl extends ServiceImpl<XjrExcelImportMapper,
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/11
      * @Param:[moduleId, f_moduleBtnId]
      * @return:com.xjrsoft.module.excel.entity.XjrExcelImport
@@ -99,7 +99,7 @@ public class XjrExcelImportServiceImpl extends ServiceImpl<XjrExcelImportMapper,
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/11
      * @Param:[file]
      * @return:java.io.File
@@ -122,7 +122,7 @@ public class XjrExcelImportServiceImpl extends ServiceImpl<XjrExcelImportMapper,
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/11
      * @Param:[fDbTable, list, column, pmKey]
      * @return:java.lang.String
@@ -154,7 +154,7 @@ public class XjrExcelImportServiceImpl extends ServiceImpl<XjrExcelImportMapper,
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/11
      * @Param:[titleData]
      * @return:java.io.File
@@ -167,7 +167,7 @@ public class XjrExcelImportServiceImpl extends ServiceImpl<XjrExcelImportMapper,
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/14
      * @Param:[dto]
      * @return:boolean
@@ -189,7 +189,7 @@ public class XjrExcelImportServiceImpl extends ServiceImpl<XjrExcelImportMapper,
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/14
      * @Param:[id, dto]
      * @return:boolean

@@ -37,7 +37,7 @@ public class XjrLgMapServiceImpl extends ServiceImpl<XjrLgMapMapper, XjrLgMap> i
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/12
      * @Param:[dto]
      * @return:com.xjrsoft.common.page.PageOutput
@@ -52,7 +52,7 @@ public class XjrLgMapServiceImpl extends ServiceImpl<XjrLgMapMapper, XjrLgMap> i
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/12
      * @Param:[params]
      * @return:boolean
@@ -74,7 +74,7 @@ public class XjrLgMapServiceImpl extends ServiceImpl<XjrLgMapMapper, XjrLgMap> i
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/12
     * @Param:[params]
     * @return:boolean

@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
-* @Author:湘北智造-框架开发组
+* @Author:光华科技-软件研发部
 * @Date:2020/11/10
 * @Description:excel导入实体类
 */

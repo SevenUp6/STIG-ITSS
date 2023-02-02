@@ -24,7 +24,7 @@ import java.util.Map;
  */
 public interface IXjrExcelImportService extends IService<XjrExcelImport> {
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/11
      * @Param:[dto, fModuleId]
      * @return:com.xjrsoft.common.page.PageOutput<com.xjrsoft.module.excel.vo.ExcelImportVo>
@@ -33,7 +33,7 @@ public interface IXjrExcelImportService extends IService<XjrExcelImport> {
     PageOutput<ExcelImportVo> getPageData(GetListExcelImportDto dto);
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/11
     * @Param:[id]
     * @return:boolean
@@ -42,7 +42,7 @@ public interface IXjrExcelImportService extends IService<XjrExcelImport> {
     boolean delete(String id);
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/11
     * @Param:[moduleId, f_moduleBtnId]
     * @return:com.xjrsoft.module.excel.entity.XjrExcelImport
@@ -51,7 +51,7 @@ public interface IXjrExcelImportService extends IService<XjrExcelImport> {
     XjrExcelImport getByModuleId(String moduleId, String f_moduleBtnId);
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/11
     * @Param:[file]
     * @return:java.io.File
@@ -60,7 +60,7 @@ public interface IXjrExcelImportService extends IService<XjrExcelImport> {
     File multipartFile2File(MultipartFile file) throws Exception;
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/11
     * @Param:[fDbTable, list, column, pmKey]
     * @return:java.lang.String
@@ -69,7 +69,7 @@ public interface IXjrExcelImportService extends IService<XjrExcelImport> {
     String assembleSql(String fDbTable, List<List<String>> list, String column, String pmKey);
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/11
     * @Param:[titleDataList]
     * @return:java.lang.Object
@@ -78,7 +78,7 @@ public interface IXjrExcelImportService extends IService<XjrExcelImport> {
     File downloadExcelModel(Map<String, String> titleDataList) throws IOException;
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/14
     * @Param:[dto]
     * @return:java.lang.Object
@@ -87,7 +87,7 @@ public interface IXjrExcelImportService extends IService<XjrExcelImport> {
     boolean saveExcelImport(XjrExcelImport excelImport, List<XjrExcelImportfileds> excelImportFieldList);
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/14
      * @Param:[dto]
      * @return:java.lang.Object

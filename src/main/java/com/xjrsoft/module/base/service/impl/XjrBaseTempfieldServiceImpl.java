@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * @Author:湘北智造-框架开发组
+ * @Author:光华科技-软件研发部
  * @Date:2020/10/26
  * @Description:临时变量表服务实现类
  */
@@ -54,7 +54,7 @@ public class XjrBaseTempfieldServiceImpl extends ServiceImpl<XjrBaseTempfieldMap
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/25
     * @Param:[nwfSchemeInfoId, deploymentId]
     * @return:java.util.List<com.xjrsoft.module.base.entity.XjrBaseTempfield>

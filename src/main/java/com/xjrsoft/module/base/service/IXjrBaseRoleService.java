@@ -19,7 +19,7 @@ import java.util.List;
 public interface IXjrBaseRoleService extends IService<XjrBaseRole> {
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/6
     * @Param:[dto]
     * @return:com.xjrsoft.common.page.PageOutput<com.xjrsoft.module.base.entity.XjrBaseRole>
@@ -28,7 +28,7 @@ public interface IXjrBaseRoleService extends IService<XjrBaseRole> {
     PageOutput<RoleVo> getRolePageList(GetPageListDto dto);
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/6
     * @Param:[userId]
     * @return:java.util.List<com.xjrsoft.module.base.entity.XjrBaseRole>
@@ -39,7 +39,7 @@ public interface IXjrBaseRoleService extends IService<XjrBaseRole> {
     List<XjrBaseRole> getAppRolesByUserId(String userId);
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2021/1/13
     * @Param:[]
     * @return:java.util.List<com.xjrsoft.module.base.entity.XjrBaseRole>

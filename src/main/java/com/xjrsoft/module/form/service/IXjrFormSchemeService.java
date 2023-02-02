@@ -14,7 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface IXjrFormSchemeService extends IService<XjrFormScheme> {
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/14
     * @Param:[id]
     * @return:java.lang.String

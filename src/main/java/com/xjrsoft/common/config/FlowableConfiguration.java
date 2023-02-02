@@ -10,7 +10,7 @@ package com.xjrsoft.common.config;
 //import org.springframework.context.annotation.Configuration;
 
 /**
- * @Author:湘北智造-框架开发组
+ * @Author:光华科技-软件研发部
  * @Date:2020/10/22
  * @Description:工作流配置类
  */

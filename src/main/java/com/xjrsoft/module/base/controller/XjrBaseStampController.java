@@ -28,7 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @Author:湘北智造-框架开发组
+ * @Author:光华科技-软件研发部
  * @Date:2020/11/4
  * @Description:工作流签章控制器
  */
@@ -47,7 +47,7 @@ public class XjrBaseStampController {
 
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/5
     * @Param:[dto, StampType:分类, EnabledMark:启用状态, StampAttributes:0私人签章 1 默认签章 2 公共签章]
     * @return:com.xjrsoft.common.result.Response<com.xjrsoft.common.page.PageOutput<com.xjrsoft.module.base.entity.XjrBaseStamp>>
@@ -63,7 +63,7 @@ public class XjrBaseStampController {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/4
      * @Param:[xjrBaseStamp]
      * @return:com.xjrsoft.common.result.Response
@@ -76,7 +76,7 @@ public class XjrBaseStampController {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/4
      * @Param:[id]
      * @return:com.xjrsoft.common.result.Response
@@ -92,7 +92,7 @@ public class XjrBaseStampController {
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/5
     * @Param:[ids]
     * @return:com.xjrsoft.common.result.Response
@@ -127,7 +127,7 @@ public class XjrBaseStampController {
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/5
     * @Param:[id]
     * @return:com.xjrsoft.common.result.Response
@@ -151,7 +151,7 @@ public class XjrBaseStampController {
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/5
     * @Param:[id]
     * @return:com.xjrsoft.common.result.Response
@@ -172,7 +172,7 @@ public class XjrBaseStampController {
     /* 公共签章部分 */
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2021/3/15
     * @Param:[]
     * @return:com.xjrsoft.common.result.Response
@@ -320,7 +320,7 @@ public class XjrBaseStampController {
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2021/3/16
     * @Param:[id]
     * @return:com.xjrsoft.common.result.Response

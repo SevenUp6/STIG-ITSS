@@ -6,14 +6,14 @@ import com.xjrsoft.module.excel.entity.XjrExcelImportfileds;
 import java.util.List;
 
 /**
-* @Author:湘北智造-框架开发组
+* @Author:光华科技-软件研发部
 * @Date:2020/11/11
 * @Description:Excel导入字段转换关系表 服务类
 */
 public interface IXjrExcelImportfiledsService extends IService<XjrExcelImportfileds> {
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/11
     * @Param:[id]
     * @return:java.util.List<com.xjrsoft.module.excel.entity.XjrExcelImportfileds>
@@ -22,7 +22,7 @@ public interface IXjrExcelImportfiledsService extends IService<XjrExcelImportfil
     List<XjrExcelImportfileds> listByImportId(String id);
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/11
     * @Param:[id]
     * @return:com.xjrsoft.module.excel.entity.XjrExcelImportfileds

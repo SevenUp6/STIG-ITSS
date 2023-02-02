@@ -22,7 +22,7 @@ import java.math.BigDecimal;
 import java.util.*;
 
 /**
- * @Author:湘北智造-框架开发组
+ * @Author:光华科技-软件研发部
  * @Date:2020/12/9
  * @Description:工作流json处理工具类
  */
@@ -41,7 +41,7 @@ public class JsonUtil {
 //    static IXjrNwfSchemeService nwfSchemeService = SpringUtil.getBean(IXjrNwfSchemeService.class);
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/12/21
      * @Param:[jsonStr, nwfSchemeInfoId]
      * @return:java.lang.String
@@ -147,7 +147,7 @@ public class JsonUtil {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/12/24
      * @Param:[conditionSequenceFlow]
      * @return:java.lang.String
@@ -213,7 +213,7 @@ public class JsonUtil {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/12/21
      * @Param:[fkUserEm]
      * @return:void
@@ -242,7 +242,7 @@ public class JsonUtil {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/12/21
      * @Param:[fkUserEm]
      * @return:void
@@ -299,7 +299,7 @@ public class JsonUtil {
 
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/12/26
      * @Param:[jsonObj, version, nwfSchemeInfoId]
      * @return:void
@@ -447,7 +447,7 @@ public class JsonUtil {
 
         /**
          * @param
-         * @author 湘北智造-框架开发组
+         * @author 光华科技-软件研发部
          * @date:2020年4月1日
          * @description:设置候选组人员为候选人
          */
@@ -482,7 +482,7 @@ public class JsonUtil {
         }
 
         /**
-         * @Author:湘北智造-框架开发组
+         * @Author:光华科技-软件研发部
          * @Date:2020/11/10
          * @Param:[assigment]
          * @return:java.util.List<Record>
@@ -514,7 +514,7 @@ public class JsonUtil {
 
 
         /**
-         * @Author:湘北智造-框架开发组
+         * @Author:光华科技-软件研发部
          * @Date:2020/11/10
          * @Param:[childShapes, childShape, properties, nwfSchemeInfoId]
          * @return:com.alibaba.fastjson.JSONObject
@@ -567,7 +567,7 @@ public class JsonUtil {
         }
 
         /**
-         * @Author:湘北智造-框架开发组
+         * @Author:光华科技-软件研发部
          * @Date:2020/11/10
          * @Param:[properties, callResourceId, nwfSchemeInfoId]
          * @return:com.alibaba.fastjson.JSONObject
@@ -598,7 +598,7 @@ public class JsonUtil {
 
 
         /**
-         * @Author:湘北智造-框架开发组
+         * @Author:光华科技-软件研发部
          * @Date:2020/11/10
          * @Param:[childShapes, resourceId]
          * @return:java.util.List<java.lang.String>
@@ -625,7 +625,7 @@ public class JsonUtil {
         }
 
         /**
-         * @Author:湘北智造-框架开发组
+         * @Author:光华科技-软件研发部
          * @Date:2020/11/10
          * @Param:[childShapes, resourceId]
          * @return:java.util.List<java.lang.String>
@@ -660,7 +660,7 @@ public class JsonUtil {
 
 
         /**
-         * @Author:湘北智造-框架开发组
+         * @Author:光华科技-软件研发部
          * @Date:2020/11/10
          * @Param:[childShapes, currentResourceId]
          * @return:boolean
@@ -710,7 +710,7 @@ public class JsonUtil {
 
 
         /**
-         * @Author:湘北智造-框架开发组
+         * @Author:光华科技-软件研发部
          * @Date:2020/11/10
          * @Param:[childShapes, resourceId]
          * @return:void
@@ -817,7 +817,7 @@ public class JsonUtil {
         }
 
         /**
-         * @Author:湘北智造-框架开发组
+         * @Author:光华科技-软件研发部
          * @Date:2020/11/10
          * @Param:[fSchemeInfo, fieldId]
          * @return:java.lang.String[]
@@ -846,7 +846,7 @@ public class JsonUtil {
 
 
         /**
-         * @Author:湘北智造-框架开发组
+         * @Author:光华科技-软件研发部
          * @Date:2020/11/10
          * @Param:[jsonStr, timeOut, messageInterval, pushTimes]
          * @return:java.lang.String
@@ -934,7 +934,7 @@ public class JsonUtil {
         }
 
         /**
-         * @Author:湘北智造-框架开发组
+         * @Author:光华科技-软件研发部
          * @Date:2020/11/10
          * @Param:[sourceJsonArray, targetJsonArray]
          * @return:java.lang.Integer
@@ -1062,7 +1062,7 @@ public class JsonUtil {
         }
 
         /**
-         * @Author:湘北智造-框架开发组
+         * @Author:光华科技-软件研发部
          * @Date:2020/11/10
          * @Param:[sourceJsonArray, targetJsonArray, resourceId]
          * @return:boolean
@@ -1162,7 +1162,7 @@ public class JsonUtil {
         }
 
         /**
-         * @Author:湘北智造-框架开发组
+         * @Author:光华科技-软件研发部
          * @Date:2020/11/10
          * @Param:[fkbuttonpopuList]
          * @return:java.util.List<java.util.Map<java.lang.String,java.lang.String>>
@@ -1181,7 +1181,7 @@ public class JsonUtil {
 
 
         /**
-         * @Author:湘北智造-框架开发组
+         * @Author:光华科技-软件研发部
          * @Date:2021/2/22
          * @Param:[nwfSchemeInfoId]
          * @return:java.lang.String
@@ -1204,7 +1204,7 @@ public class JsonUtil {
         }
 
         /**
-         * @Author:湘北智造-框架开发组
+         * @Author:光华科技-软件研发部
          * @Date:2021/3/3
          * @Param:[json]
          * @return:java.lang.String
@@ -1239,7 +1239,7 @@ public class JsonUtil {
         }
 
         /**
-         * @Author:湘北智造-框架开发组
+         * @Author:光华科技-软件研发部
          * @Date:2021/3/4
          * @Param:[map, taskArrays]
          * @return:com.alibaba.fastjson.JSONArray

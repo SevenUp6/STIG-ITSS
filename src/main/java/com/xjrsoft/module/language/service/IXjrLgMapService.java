@@ -20,7 +20,7 @@ import java.util.Map;
 public interface IXjrLgMapService extends IService<XjrLgMap> {
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/12
     * @Param:[code]
     * @return:java.util.List<com.xjrsoft.module.language.entity.XjrLgMap>
@@ -29,7 +29,7 @@ public interface IXjrLgMapService extends IService<XjrLgMap> {
     List<XjrLgMap> getByCode(String code, String keyword);
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/12
     * @Param:[dto]
     * @return:java.lang.Object
@@ -38,7 +38,7 @@ public interface IXjrLgMapService extends IService<XjrLgMap> {
     PageOutput<LgMapVo> getPageData(GetListLgMapDto dto);
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/12
     * @Param:[params]
     * @return:java.lang.Object
@@ -47,7 +47,7 @@ public interface IXjrLgMapService extends IService<XjrLgMap> {
     boolean saveLgByObjectId(Map<String, Object> params);
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/12
     * @Param:[params]
     * @return:boolean

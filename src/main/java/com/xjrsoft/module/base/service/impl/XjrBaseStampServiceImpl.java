@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
-* @Author:湘北智造-框架开发组
+* @Author:光华科技-软件研发部
 * @Date:2020/10/26
 * @Description:工作流签章服务实现类
 */
@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class XjrBaseStampServiceImpl extends ServiceImpl<XjrBaseStampMapper, XjrBaseStamp> implements IXjrBaseStampService {
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/5
     * @Param:[dto, StampType:分类, EnabledMark:启用状态, StampAttributes:0私人签章 1 默认签章 2 公共签章]
     * @return:com.xjrsoft.common.page.PageOutput
@@ -79,7 +79,7 @@ public class XjrBaseStampServiceImpl extends ServiceImpl<XjrBaseStampMapper, Xjr
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/12/24
     * @Param:[id, password]
     * @return:boolean
@@ -100,7 +100,7 @@ public class XjrBaseStampServiceImpl extends ServiceImpl<XjrBaseStampMapper, Xjr
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/12/24
     * @Param:[dto]
     * @return:boolean
@@ -134,7 +134,7 @@ public class XjrBaseStampServiceImpl extends ServiceImpl<XjrBaseStampMapper, Xjr
 
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/6
      * @Param:[]
      * @return:void

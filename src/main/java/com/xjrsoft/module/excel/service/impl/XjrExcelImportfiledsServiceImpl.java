@@ -22,7 +22,7 @@ import java.util.List;
 public class XjrExcelImportfiledsServiceImpl extends ServiceImpl<XjrExcelImportfiledsMapper, XjrExcelImportfileds> implements IXjrExcelImportfiledsService {
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/11
     * @Param:[importId]
     * @return:java.util.List<com.xjrsoft.module.excel.entity.XjrExcelImportfileds>
@@ -34,7 +34,7 @@ public class XjrExcelImportfiledsServiceImpl extends ServiceImpl<XjrExcelImportf
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/11
     * @Param:[id]
     * @return:com.xjrsoft.module.excel.entity.XjrExcelImportfileds

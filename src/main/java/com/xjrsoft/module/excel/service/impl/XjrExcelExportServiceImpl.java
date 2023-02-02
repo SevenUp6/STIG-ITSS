@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
 public class XjrExcelExportServiceImpl extends ServiceImpl<XjrExcelExportMapper, XjrExcelExport> implements IXjrExcelExportService {
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/10
     * @Param:[dto, fModuleId]
     * @return:com.xjrsoft.common.page.PageOutput<com.xjrsoft.module.excel.entity.XjrExcelExport>
@@ -45,7 +45,7 @@ public class XjrExcelExportServiceImpl extends ServiceImpl<XjrExcelExportMapper,
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/14
     * @Param:[xjrExcelExport]
     * @return:boolean
@@ -58,7 +58,7 @@ public class XjrExcelExportServiceImpl extends ServiceImpl<XjrExcelExportMapper,
     }
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/14
     * @Param:[id, xjrExcelExport]
     * @return:boolean

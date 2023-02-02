@@ -9,7 +9,7 @@ import com.xjrsoft.module.base.entity.XjrBaseTempfield;
 import java.util.List;
 
 /**
-* @Author:湘北智造-框架开发组
+* @Author:光华科技-软件研发部
 * @Date:2020/10/26
 * @Description:临时变量表
 */
@@ -17,7 +17,7 @@ public interface IXjrBaseTempfieldService extends IService<XjrBaseTempfield> {
 
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/10/23
     * @Param:[idValue, type]
     * @return:com.xjrsoft.module.base.entity.XjrBaseTempfield
@@ -28,7 +28,7 @@ public interface IXjrBaseTempfieldService extends IService<XjrBaseTempfield> {
      List<XjrBaseTempfield> getListByIdAndType(List<String> idValues, String type);
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/10/23
     * @Param:[subProcess_img, subProcess_formData, subProcess_name]
     * @return:boolean
@@ -37,7 +37,7 @@ public interface IXjrBaseTempfieldService extends IService<XjrBaseTempfield> {
     boolean saveSubProcessInfo(XjrBaseTempfield subProcess_img, XjrBaseTempfield subProcess_formData, XjrBaseTempfield subProcess_name);
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/10/23
     * @Param:[idValue]
     * @return:List<XjrBaseTempfield>
@@ -46,7 +46,7 @@ public interface IXjrBaseTempfieldService extends IService<XjrBaseTempfield> {
     List<XjrBaseTempfield> getSubProcessInfo(String idValue);
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/10/23
     * @Param:[nwfSchemeInfoId, deploymentId]
     * @return:java.util.List<com.xjrsoft.module.base.entity.XjrBaseTempfield>
@@ -55,7 +55,7 @@ public interface IXjrBaseTempfieldService extends IService<XjrBaseTempfield> {
     List<XjrBaseTempfield> selectByNwfInfoIdOrDeplId(String nwfSchemeInfoId, String deploymentId);
 
     /**
-    * @Author:湘北智造-框架开发组
+    * @Author:光华科技-软件研发部
     * @Date:2020/11/3
     * @Param:[type]
     * @return:java.util.List<XjrTempKeyvalue>

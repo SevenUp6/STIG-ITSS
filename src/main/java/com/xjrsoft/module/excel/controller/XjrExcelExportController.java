@@ -31,7 +31,7 @@ import java.util.Map;
 
 
 /**
- * @Author:湘北智造-框架开发组
+ * @Author:光华科技-软件研发部
  * @Date:2020/11/10
  * @Description:excel导出控制器
  */
@@ -44,7 +44,7 @@ public class XjrExcelExportController {
     private IXjrExcelExportService excelExportService;
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/10
      * @Param:[dto, fModuleId]
      * @return:com.xjrsoft.common.result.Response
@@ -57,7 +57,7 @@ public class XjrExcelExportController {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/10
      * @Param:[]
      * @return:voide
@@ -75,7 +75,7 @@ public class XjrExcelExportController {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/10
      * @Param:[xjrExcelExport]
      * @return:com.xjrsoft.common.result.Response
@@ -88,7 +88,7 @@ public class XjrExcelExportController {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/10
      * @Param:[id]
      * @return:com.xjrsoft.common.result.Response
@@ -101,7 +101,7 @@ public class XjrExcelExportController {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/10
      * @Param:[id]
      * @return:com.xjrsoft.common.result.Response
@@ -114,7 +114,7 @@ public class XjrExcelExportController {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/10
      * @Param:[id]
      * @return:com.xjrsoft.common.result.Response
@@ -129,7 +129,7 @@ public class XjrExcelExportController {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/10
      * @Param:[id]
      * @return:com.xjrsoft.common.result.Response
@@ -144,7 +144,7 @@ public class XjrExcelExportController {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/11
      * @Param:[titleDataList:标题列数据, dataList:导出数据List]
      * @return:com.xjrsoft.common.result.Response
@@ -165,7 +165,7 @@ public class XjrExcelExportController {
     }
 
     /**
-     * @Author:湘北智造-框架开发组
+     * @Author:光华科技-软件研发部
      * @Date:2020/11/11
      * @Param:[url:请求地址url, urlParam:请求url携带的参数, titleHeader:excel列名]
      * @return:void
