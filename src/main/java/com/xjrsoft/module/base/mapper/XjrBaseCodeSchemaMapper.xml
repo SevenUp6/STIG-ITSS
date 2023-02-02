@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjrsoft.module.base.mapper.XjrBaseCodeSchemaMapper">
+
+    <select id="getPageList" resultType="com.xjrsoft.module.base.vo.CodeSchemaListVo">
+        select
+            cs.F_Id AS "id",
+            cs.F_Name AS "name",
+            cs.F_Type AS "type",
+            cs.F_Description AS "description",
+            did.F_ItemName as "catalog"
+        from
+            xjr_base_codeschema cs
+        left join xjr_base_dataitemdetail did on
+            cs.F_Catalog = did.F_ItemValue
+        left join xjr_base_dataitem di on
+            did.F_ItemId = di.F_ItemId and di.F_ItemCode = 'CodeSchemaType'
+        <where>
+            <if test="keyword != null and keyword != ''">
+                cs.F_Name like #{keyword}
+            </if>
+            <if test="catalog != null and catalog != ''">
+                and cs.F_Catalog = #{catalog}
+            </if>
+        </where>
+    </select>
+</mapper>

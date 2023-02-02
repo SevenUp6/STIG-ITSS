@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjrsoft.module.demo.mapper.XjrBaseItemMapper">
+
+    <resultMap id="itemResultMap" type="com.xjrsoft.module.demo.vo.ItemVo">
+        <id column="F_Id" jdbcType="VARCHAR" property="id"/>
+        <result column="F_Name" jdbcType="VARCHAR" property="name"/>
+        <result column="F_Deposition" jdbcType="VARCHAR" property="deposition"/>
+        <result column="F_Replacement" jdbcType="INTEGER" property="replacement"/>
+        <result column="F_MinHeight" jdbcType="NUMERIC" property="minHeight"/>
+        <result column="F_MaxHeight" jdbcType="NUMERIC" property="maxHeight"/>
+        <result column="F_Price" jdbcType="NUMERIC" property="price"/>
+        <result column="F_Count" jdbcType="NUMERIC" property="count"/>
+        <result column="F_IsProduct" jdbcType="INTEGER" property="isProduct"/>
+        <result column="F_Description" jdbcType="VARCHAR" property="description"/>
+        <result column="F_OrderId" jdbcType="VARCHAR" property="orderId"/>
+    </resultMap>
+
+    <select id="getListByOrderId" resultMap="itemResultMap">
+        select
+            i.*,
+            il.F_OrderId
+        from
+            xjr_base_item i
+        left join xjr_base_itemrelation il on
+            i.F_Id = il.F_ItemId
+            and il.F_Category = 1
+        <where>
+            il.F_OrderId = #{orderId}
+        </where>
+    </select>
+</mapper>

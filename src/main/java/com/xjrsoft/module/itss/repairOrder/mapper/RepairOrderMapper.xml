@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjrsoft.module.itss.repairOrder.mapper.RepairOrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="repairOrderResultMap" type="com.xjrsoft.module.itss.repairOrder.entity.RepairOrder">
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="fau_des" property="fauDes"/>
+        <result column="isurgent" property="isurgent"/>
+        <result column="status" property="status"/>
+        <result column="report_name" property="reportName"/>
+        <result column="report_phone" property="reportPhone"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="created_name" property="createdName"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="repair_usrid" property="repairUsrid"/>
+        <result column="repair_usrname" property="repairUsrname"/>
+        <result column="assign_time" property="assignTime"/>
+        <result column="repair_time" property="repairTime"/>
+        <result column="type_id" property="typeId"/>
+        <result column="type_name" property="typeName"/>
+        <result column="machine_sn" property="machineSn"/>
+        <result column="mod_id" property="modId"/>
+        <result column="mod_name" property="modName"/>
+        <result column="fau_id" property="fauId"/>
+        <result column="fau_name" property="fauName"/>
+        <result column="com_id" property="comId"/>
+        <result column="result_des" property="resultDes"/>
+        <result column="handle_type" property="handleType"/>
+        <result column="reason" property="reason"/>
+        <result column="report_pic" property="reportPic"/>
+        <result column="repair_pic" property="repairPic"/>
+        <result column="remark" property="remark"/>
+        <result column="updated_by" property="updatedBy"/>
+        <result column="updated_time" property="updatedTime"/>
+    </resultMap>
+
+
+
+</mapper>

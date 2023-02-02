@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjrsoft.module.base.mapper.XjrBaseUserRelationMapper">
+
+    <resultMap id="memberUserVoBaseResultMap" type="com.xjrsoft.module.base.vo.MemberUserVo">
+        <id column="F_UserId" jdbcType="VARCHAR" property="userId" />
+        <result column="F_Account" jdbcType="VARCHAR" property="account" />
+        <result column="F_RealName" jdbcType="VARCHAR" property="realName" />
+        <result column="F_DingTalkId" jdbcType="VARCHAR" property="dingTalkId" />
+        <collection property="departmentSimpleVoList" ofType="com.xjrsoft.module.base.vo.DepartmentSimpleVo">
+            <id column="F_DepartmentId" jdbcType="VARCHAR" property="departmentId" />
+            <result column="F_FullName" jdbcType="VARCHAR" property="departmentName" />
+        </collection>
+    </resultMap>
+
+    <select id="getUsersOfSpecialPosts" resultType="com.xjrsoft.module.base.vo.SpecialPostUserVo">
+        select
+            xbu.F_Account as "account",
+            xbr.F_ObjectId as "objectId",
+            xbu.F_RealName as "realName",
+            xbu.F_UserId as "userId"
+        from
+            xjr_base_user xbu
+        left join xjr_base_userrelation xbr on
+            xbu.F_UserId = xbr.F_UserId
+        where
+            xbr.F_Category = #{objectType}
+            and xbr.F_ObjectId like #{objectId}
+    </select>
+
+    <select id="getUsersOfObject" resultType="com.xjrsoft.module.base.entity.XjrBaseUser">
+        select
+            xbu.F_UserId as "userId",
+            xbu.F_EnCode as "enCode",
+            xbu.F_Account as "account",
+            xbu.F_Password as "password",
+            xbu.F_Secretkey as "secretkey",
+            xbu.F_RealName as "realName",
+            xbu.F_NickName as "nickName",
+            xbu.F_HeadIcon as "headIcon",
+            xbu.F_QuickQuery as "quickQuery",
+            xbu.F_SimpleSpelling as "simpleSpelling",
+            xbu.F_Gender as "gender",
+            xbu.F_Birthday as "birthday",
+            xbu.F_Mobile as "mobile",
+            xbu.F_Telephone as "telephone",
+            xbu.F_Email as "email",
+            xbu.F_OICQ as "oicq",
+            xbu.F_WeChat as "weChat",
+            xbu.F_MSN as "msn",
+            xbu.F_CompanyId as "companyId",
+            xbu.F_SecurityLevel as "securityLevel",
+            xbu.F_OpenId as "openId",
+            xbu.F_Question as "question",
+            xbu.F_AnswerQuestion as "answerQuestion",
+            xbu.F_CheckOnLine as "checkOnLine",
+            xbu.F_AllowStartTime as "allowStartTime",
+            xbu.F_AllowEndTime as "allowEndTime",
+            xbu.F_LockStartDate as "lockStartDate",
+            xbu.F_LockEndDate as "lockEndDate",
+            xbu.F_SortCode as "sortCode",
+            xbu.F_DeleteMark as "deleteMark",
+            xbu.F_EnabledMark as "enabledMark",
+            xbu.F_Description as "description",
+            xbu.F_CreateDate as "createDate",
+            xbu.F_CreateUserId as "createUserId",
+            xbu.F_CreateUserName as "createUserName",
+            xbu.F_ModifyDate as "modifyDate",
+            xbu.F_ModifyUserId as "modifyUserId",
+            xbu.F_ModifyUserName as "modifyUserName",
+            xbu.F_Token as "token"
+        from
+            xjr_base_user xbu
+        left join xjr_base_userrelation xbur on
+            xbu.F_UserId = xbur.F_UserId
+            and xbur.F_Category = #{objectType}
+        where
+            xbur.F_ObjectId = #{objectId}
+            and xbu.F_DeleteMark = 0
+            and xbu.f_EnabledMark = 1
+    </select>
+
+    <select id="getMemberUserVoListOfObject" resultMap="memberUserVoBaseResultMap">
+        select
+            d.F_DepartmentId,
+            d.F_FullName,
+            u.F_UserId,
+            u.F_Account,
+            u.F_DingTalkId,
+            u.F_RealName
+        from
+            xjr_base_user u
+        left join xjr_base_userrelation ur on
+            u.F_UserId = ur.F_UserId
+            and ur.F_Category = #{objectType}
+        left join xjr_base_userrelation ur1 on
+            ur1.F_UserId = u.F_UserId and ur1.F_Category = 3
+        left join xjr_base_department d on
+            ur1.F_ObjectId = d.F_DepartmentId
+        where 1=1
+            <if test="objectId != '00001' and objectId != ''">
+                and ur.F_ObjectId = #{objectId}
+            </if>
+
+            <if test="keyword != null and keyword != ''">
+                and u.F_RealName like #{keyword}
+            </if>
+            and u.F_DeleteMark = 0
+            and u.F_EnabledMark = 1
+    </select>
+</mapper>
+
+
+
+
+

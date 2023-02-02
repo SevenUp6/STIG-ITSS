@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjrsoft.module.base.mapper.XjrBaseDatasourceMapper">
+
+    <resultMap id="datasourceResultMap" type="com.xjrsoft.module.base.vo.DataSourceVo">
+        <id column="F_Id" jdbcType="VARCHAR" property="id"/>
+        <result column="F_Code" jdbcType="VARCHAR" property="code" />
+        <result column="F_Name" jdbcType="VARCHAR" property="name" />
+        <result column="F_DbId" jdbcType="VARCHAR" property="dbId" />
+        <result column="F_DbName" jdbcType="VARCHAR" property="dbName" />
+        <result column="F_Sql" jdbcType="VARCHAR" property="fsql" />
+        <result column="F_Description" jdbcType="VARCHAR" property="description" />
+        <result column="F_CreateUserName" jdbcType="VARCHAR" property="createUserName" />
+        <result column="F_CreateDate" jdbcType="DATE" property="createDate" />
+    </resultMap>
+
+    <select id="getList" resultMap="datasourceResultMap">
+        select
+            ds.*,
+            db.F_DBName
+        from
+            xjr_base_datasource ds
+        left join xjr_base_databaselink db on
+            ds.F_DbId = db.F_DatabaselinkId
+        <where>
+            <if test="keyword != null and keyword != ''">
+                ds.F_Name like #{keyword}
+            </if>
+        </where>
+    </select>
+</mapper>

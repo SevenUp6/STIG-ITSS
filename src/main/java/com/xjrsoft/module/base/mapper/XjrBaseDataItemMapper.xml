@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjrsoft.module.base.mapper.XjrBaseDataItemMapper">
+
+    <resultMap id="BaseDetailResultMap" type="com.xjrsoft.module.base.entity.XjrBaseDataItemDetail">
+        <id column="F_ItemDetailId" jdbcType="VARCHAR" property="itemDetailId" />
+        <result column="F_ItemId" jdbcType="VARCHAR" property="itemId" />
+        <result column="F_ParentId" jdbcType="VARCHAR" property="parentId" />
+        <result column="F_ItemCode" jdbcType="VARCHAR" property="itemCode" />
+        <result column="F_ItemName" jdbcType="VARCHAR" property="itemName" />
+        <result column="F_ItemValue" jdbcType="VARCHAR" property="itemValue" />
+        <result column="F_QuickQuery" jdbcType="VARCHAR" property="quickQuery" />
+        <result column="F_SimpleSpelling" jdbcType="VARCHAR" property="simpleSpelling" />
+        <result column="F_IsDefault" jdbcType="INTEGER" property="isDefault" />
+        <result column="F_SortCode" jdbcType="INTEGER" property="sortCode" />
+        <result column="F_DeleteMark" jdbcType="INTEGER" property="deleteMark" />
+        <result column="F_EnabledMark" jdbcType="INTEGER" property="enabledMark" />
+        <result column="F_Description" jdbcType="VARCHAR" property="description" />
+        <result column="F_CreateDate" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="F_CreateUserId" jdbcType="VARCHAR" property="createUserId" />
+        <result column="F_CreateUserName" jdbcType="VARCHAR" property="createUserName" />
+        <result column="F_ModifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+        <result column="F_ModifyUserId" jdbcType="VARCHAR" property="modifyUserId" />
+        <result column="F_ModifyUserName" jdbcType="VARCHAR" property="modifyUserName" />
+    </resultMap>
+
+    <select id="getDataItemDetails" resultMap="BaseDetailResultMap">
+        select
+            xbd.*
+        from
+            xjr_base_dataitemdetail xbd
+        left join xjr_base_dataitem xbi on
+            xbd.F_ItemId = xbi.F_ItemId
+        where
+            xbi.F_ItemCode = #{param1}
+    </select>
+</mapper>

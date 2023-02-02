@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjrsoft.module.base.mapper.XjrBaseSubsystemMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="xjrBaseSubsystemResultMap" type="com.xjrsoft.module.base.entity.XjrBaseSubsystem">
+        <id column="F_Id" property="id"/>
+        <result column="F_Name" property="name"/>
+        <result column="F_EnCode" property="enCode"/>
+        <result column="F_SortCode" property="sortCode"/>
+        <result column="F_DeleteMark" property="deleteMark"/>
+        <result column="F_EnabledMark" property="enabledMark"/>
+        <result column="F_Description" property="description"/>
+        <result column="F_IndexUrl" property="indexUrl"/>
+        <result column="F_CreateDate" property="createDate"/>
+        <result column="F_CreateUserId" property="createUserId"/>
+        <result column="F_CreateUserName" property="createUserName"/>
+        <result column="F_ModifyDate" property="modifyDate"/>
+        <result column="F_ModifyUserId" property="modifyUserId"/>
+        <result column="F_ModifyUserName" property="modifyUserName"/>
+    </resultMap>
+
+
+    <select id="selectAuthList" resultMap="xjrBaseSubsystemResultMap">
+        select
+            ss.*
+        from
+            xjr_base_subsystem ss
+        left join xjr_base_authorize a on
+            ss.F_Id = a.F_ItemId
+        where
+            a.F_ItemType = 9
+            and ss.F_DeleteMark = 0
+            and ss.F_EnabledMark = 1
+            and ((a.F_ObjectId in (
+            select
+                F_ObjectId
+            from
+                xjr_base_userrelation
+            where
+                F_Category = 1
+                and F_UserId = #{userId}) and a.F_ObjectType = 1)
+                or (a.F_ObjectId = #{userId}
+                and a.F_ObjectType = 2))
+    </select>
+    <select id="checkMainSystemAuth" resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            xjr_base_authorize
+        where
+            F_ItemType = 9
+            and F_ItemId = '0'
+            and ((F_ObjectType = 1
+            and F_ObjectId in(
+            select
+                F_ObjectId
+            from
+                xjr_base_userrelation
+            where
+                F_UserId = #{userId}
+                and F_Category = 1 ))
+            or (F_ObjectType = 2
+            and F_ObjectId = #{userId}))
+    </select>
+
+</mapper>

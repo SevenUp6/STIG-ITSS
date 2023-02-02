@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjrsoft.module.language.mapper.XjrLgMapMapper">
+
+    <select id="getPageData" resultType="java.util.Map">
+        SELECT
+        a.F_Name AS Chinese,
+        b.F_Name AS english,
+        c.F_Name AS traditionalchinese,
+        a.F_Code AS F_Code
+--         b.F_Id AS F_Id_en,
+--         c.F_Id AS F_Id_tch
+        FROM
+        xjr_lg_map a
+        LEFT JOIN xjr_lg_map b ON a.F_Code = b.F_Code
+        AND b.F_TypeCode = 'english'
+        LEFT JOIN xjr_lg_map c ON a.F_Code = c.F_Code
+        AND c.F_TypeCode = 'traditionalchinese'
+        <where>
+            a.F_TypeCode = 'chinese'
+            <if test="fName != null and fName != ''">
+                and a.F_Name like #{fName}
+            </if>
+            <if test="itemNames != null and itemNames.size > 0">
+                and a.F_Name in
+                <foreach collection="itemNames" item="name" open="(" close=")" separator=" , ">
+                    #{name,jdbcType=VARCHAR}
+                </foreach>
+            </if>
+        </where>
+    </select>
+</mapper>

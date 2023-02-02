@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjrsoft.module.itss.machineCompany.mapper.MachineCompanyMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="machineCompanyResultMap" type="com.xjrsoft.module.itss.machineCompany.entity.MachineCompany">
+        <id column="id" property="id"/>
+        <result column="com_code" property="comCode"/>
+        <result column="com_name" property="comName"/>
+        <result column="pcode" property="pcode"/>
+        <result column="pname" property="pname"/>
+        <result column="node" property="node"/>
+        <result column="node_name" property="nodeName"/>
+        <result column="remark" property="remark"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="updated_by" property="updatedBy"/>
+        <result column="updated_time" property="updatedTime"/>
+    </resultMap>
+
+    <select id="getMaxComCodeByPid" resultMap="machineCompanyResultMap">
+        select com_code from machine_company where pcode=(
+            select com_code from machine_company where id=#{param1})
+        ORDER BY com_code desc limit 1
+    </select>
+
+</mapper>

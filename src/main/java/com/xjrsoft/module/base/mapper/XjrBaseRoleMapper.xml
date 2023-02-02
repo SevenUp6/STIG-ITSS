@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjrsoft.module.base.mapper.XjrBaseRoleMapper">
+
+    <resultMap id="baseRoleResultMap" type="com.xjrsoft.module.base.entity.XjrBaseRole">
+        <id column="F_RoleId" jdbcType="VARCHAR" property="roleId"/>
+        <result column="F_Category" jdbcType="VARCHAR" property="category"/>
+        <result column="F_EnCode" jdbcType="VARCHAR" property="enCode"/>
+        <result column="F_FullName" jdbcType="VARCHAR" property="fullName"/>
+        <result column="F_SortCode" jdbcType="INTEGER" property="sortCode"/>
+        <result column="F_DeleteMark" jdbcType="INTEGER" property="deleteMark"/>
+        <result column="F_EnabledMark" jdbcType="INTEGER" property="enabledMark"/>
+        <result column="F_Description" jdbcType="VARCHAR" property="description"/>
+        <result column="F_CreateDate" jdbcType="DATE" property="createDate"/>
+        <result column="F_CreateUserId" jdbcType="VARCHAR" property="createUserId"/>
+        <result column="F_CreateUserName" jdbcType="VARCHAR" property="createUserName"/>
+        <result column="F_ModifyDate" jdbcType="DATE" property="modifyDate"/>
+        <result column="F_ModifyUserId" jdbcType="VARCHAR" property="modifyUserId"/>
+        <result column="F_ModifyUserName" jdbcType="VARCHAR" property="modifyUserName"/>
+    </resultMap>
+
+    <select id="getRoleIdsForUser" resultType="java.lang.String">
+        select
+            xbr.F_RoleId
+        from
+            xjr_base_role xbr
+        left join xjr_base_userrelation xbu on
+            xbr.F_RoleId = xbu.F_ObjectId
+            and xbu.F_Category = 1
+        where
+            xbu.F_UserId = #{param1}
+    </select>
+
+    <!-- 查询用户的角色 -->
+    <select id="getRolesByUserId" resultMap="baseRoleResultMap">
+        SELECT
+            a.*
+        FROM
+            xjr_base_role a
+        LEFT JOIN xjr_base_userrelation b ON
+            a.F_RoleId = b.F_ObjectId
+        LEFT JOIN xjr_base_user c ON
+            b.F_UserId = c.F_UserId
+        <where>
+            c.F_UserId =#{F_UserId}
+        </where>
+    </select>
+
+    <!-- 查询app用户的角色 -->
+    <select id="getAppRolesByUserId" resultMap="baseRoleResultMap">
+        SELECT
+        a.*
+        FROM
+        xjr_base_role a
+        LEFT JOIN xjr_base_userrelation b ON
+        a.F_RoleId = b.F_ObjectId
+        LEFT JOIN xjr_base_user c ON
+        b.F_UserId = c.F_UserId
+        <where>
+            c.F_UserId =#{F_UserId}
+            and a.F_DeleteMark=0
+            and a.F_EnabledMark=1
+            and c.F_DeleteMark=0
+            and c.F_EnabledMark=1
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjrsoft.module.base.mapper.XjrBaseStampMapper">
+    <resultMap id="BaseResultMap" type="com.xjrsoft.module.base.entity.XjrBaseStamp">
+        <id column="F_StampId" jdbcType="VARCHAR" property="stampId"/>
+        <result column="F_StampName" jdbcType="VARCHAR" property="stampName"/>
+        <result column="F_Description" jdbcType="VARCHAR" property="description"/>
+        <result column="F_StampType" jdbcType="VARCHAR" property="stampType"/>
+        <result column="F_Password" jdbcType="VARCHAR" property="password"/>
+        <result column="F_ImgFile" jdbcType="VARCHAR" property="imgFile"/>
+        <result column="F_Sort" jdbcType="VARCHAR" property="sort"/>
+        <result column="F_EnabledMark" jdbcType="INTEGER" property="enabledMark"/>
+        <result column="F_File_Type" jdbcType="TINYINT" property="fileType"/>
+        <result column="F_CreateUserId" jdbcType="VARCHAR" property="createUserId"/>
+        <result column="F_CreateUserName" jdbcType="VARCHAR" property="createUserName"/>
+        <result column="F_CreateDate" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="F_StampAttributes" jdbcType="TINYINT" property="stampAttributes"/>
+        <result column="F_AuthorizeUser" jdbcType="VARCHAR" property="authorizeUser"/>
+    </resultMap>
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjrsoft.module.itss.fAQuestion.mapper.FAQuestionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="fAQuestionResultMap" type="com.xjrsoft.module.itss.fAQuestion.entity.FAQuestion">
+        <id column="id" property="id"/>
+        <result column="problem_des" property="problemDes"/>
+        <result column="mod_id" property="modId"/>
+        <result column="mod_name" property="modName"/>
+        <result column="fault_id" property="faultId"/>
+        <result column="fault_name" property="faultName"/>
+        <result column="suggestion" property="suggestion"/>
+        <result column="remark" property="remark"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="updated_by" property="updatedBy"/>
+        <result column="updated_time" property="updatedTime"/>
+    </resultMap>
+
+
+
+</mapper>

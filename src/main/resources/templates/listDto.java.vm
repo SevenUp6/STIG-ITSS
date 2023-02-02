@@ -1,0 +1,56 @@
+#set($dtoPackage=$package.Entity.replace("entity","dto"))
+package $!{dtoPackage};
+
+#foreach($pkg in $!{table.importPackages})
+import $!{pkg};
+#end
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.xjrsoft.common.page.PageInput;
+#if($!{entityLombokModel})
+import lombok.Data;
+    ##import lombok.EqualsAndHashCode;
+#end
+#if($!{swagger2})
+import io.swagger.annotations.ApiModel;
+#end
+
+/**
+ * $!{table.comment}视图实体类
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+#if($!{entityLombokModel})
+@Data
+    ##@EqualsAndHashCode(callSuper = true)
+#end
+#if($!{swagger2})
+@ApiModel(value = "列表$!{entity}Dto对象", description = #if ("$!{table.comment}"=="")"列表$!{entity}VO对象"#else"$!{table.comment}"#end)
+#end
+public class $!{entity}ListDto extends PageInput {
+
+#foreach($field in $!{table.fields})
+#if($!{isTree} && $field.name.equals($!{treeForm.treefieldRe}))
+    //@JsonProperty("$!{treeForm.treefieldId}")
+    private $!{field.propertyType} $!{treeForm.treefieldId};
+#else
+#foreach($queryField in $!{queryFieldList})
+#if($!{field.name.equals($queryField.fieldName)})
+#if($!{queryField.queryType.equals("date")})
+    //@JsonProperty("$!{field.name}_Start")
+    private $!{field.propertyType} $!{field.name}_Start;
+
+    //@JsonProperty("$!{field.name}_End")
+    private $!{field.propertyType} $!{field.name}_End;
+
+#else
+    //@JsonProperty("$!{field.name}")
+    private $!{field.propertyType} $!{field.name};
+
+#end
+
+#end
+#end
+#end
+#end
+}

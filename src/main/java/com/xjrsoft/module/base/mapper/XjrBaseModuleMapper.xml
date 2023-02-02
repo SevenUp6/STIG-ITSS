@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjrsoft.module.base.mapper.XjrBaseModuleMapper">
+    <!-- 菜单 -->
+    <resultMap id="baseModuleResultMap" type="com.xjrsoft.module.base.entity.XjrBaseModule">
+        <id column="F_ModuleId" jdbcType="VARCHAR" property="moduleId" />
+        <result column="F_ParentId" jdbcType="VARCHAR" property="parentId" />
+        <result column="F_EnCode" jdbcType="VARCHAR" property="enCode" />
+        <result column="F_FullName" jdbcType="VARCHAR" property="fullName" />
+        <result column="F_Icon" jdbcType="VARCHAR" property="icon" />
+        <result column="F_Component" jdbcType="VARCHAR" property="component" />
+        <result column="F_UrlAddress" jdbcType="VARCHAR" property="urlAddress" />
+        <result column="F_Target" jdbcType="VARCHAR" property="target" />
+        <result column="F_IsMenu" jdbcType="INTEGER" property="isMenu" />
+        <result column="F_AllowExpand" jdbcType="INTEGER" property="allowExpand" />
+        <result column="F_IsPublic" jdbcType="INTEGER" property="isPublic" />
+        <result column="F_AllowEdit" jdbcType="INTEGER" property="allowEdit" />
+        <result column="F_AllowDelete" jdbcType="INTEGER" property="allowDelete" />
+        <result column="F_SortCode" jdbcType="INTEGER" property="sortCode" />
+        <result column="F_DeleteMark" jdbcType="INTEGER" property="deleteMark" />
+        <result column="F_EnabledMark" jdbcType="INTEGER" property="enabledMark" />
+        <result column="F_Description" jdbcType="VARCHAR" property="description" />
+        <result column="F_CreateDate" jdbcType="DATE" property="createDate" />
+        <result column="F_CreateUserId" jdbcType="VARCHAR" property="createUserId" />
+        <result column="F_CreateUserName" jdbcType="VARCHAR" property="createUserName" />
+        <result column="F_ModifyDate" jdbcType="DATE" property="modifyDate" />
+        <result column="F_ModifyUserId" jdbcType="VARCHAR" property="modifyUserId" />
+        <result column="F_ModifyUserName" jdbcType="VARCHAR" property="modifyUserName" />
+    </resultMap>
+
+    <!-- 菜单按钮实体 -->
+    <resultMap id="BaseBtnResultMap" type="com.xjrsoft.module.base.entity.XjrBaseModuleButton">
+        <id column="F_ModuleButtonId" jdbcType="VARCHAR" property="moduleButtonId" />
+        <result column="F_ModuleId" jdbcType="VARCHAR" property="moduleId" />
+        <result column="F_ParentId" jdbcType="VARCHAR" property="parentId" />
+        <result column="F_Icon" jdbcType="VARCHAR" property="icon" />
+        <result column="F_EnCode" jdbcType="VARCHAR" property="enCode" />
+        <result column="F_FullName" jdbcType="VARCHAR" property="fullName" />
+        <result column="F_ActionAddress" jdbcType="VARCHAR" property="actionAddress" />
+        <result column="F_SortCode" jdbcType="INTEGER" property="sortCode" />
+        <result column="F_ActionName" jdbcType="VARCHAR" property="actionName" />
+    </resultMap>
+
+    <!-- 菜单列表实体 -->
+    <resultMap id="BaseColResultMap" type="com.xjrsoft.module.base.entity.XjrBaseModuleColumn">
+        <id column="F_ModuleColumnId" jdbcType="VARCHAR" property="moduleColumnId" />
+        <result column="F_ModuleId" jdbcType="VARCHAR" property="moduleId" />
+        <result column="F_ParentId" jdbcType="VARCHAR" property="parentId" />
+        <result column="F_EnCode" jdbcType="VARCHAR" property="enCode" />
+        <result column="F_FullName" jdbcType="VARCHAR" property="fullName" />
+        <result column="F_SortCode" jdbcType="INTEGER" property="sortCode" />
+        <result column="F_Description" jdbcType="VARCHAR" property="description" />
+    </resultMap>
+
+    <!-- 菜单表单字段实体 -->
+    <resultMap id="BaseFormResultMap" type="com.xjrsoft.module.base.entity.XjrBaseModuleForm">
+        <id column="F_ModuleFormId" jdbcType="VARCHAR" property="moduleFormId" />
+        <result column="F_ModuleId" jdbcType="VARCHAR" property="moduleId" />
+        <result column="F_EnCode" jdbcType="VARCHAR" property="enCode" />
+        <result column="F_FullName" jdbcType="VARCHAR" property="fullName" />
+        <result column="F_SortCode" jdbcType="INTEGER" property="sortCode" />
+        <result column="F_IsRequired" jdbcType="INTEGER" property="isRequired" />
+    </resultMap>
+
+    <select id= "getModuleOfAuth" resultMap="baseModuleResultMap">
+        select
+            *
+        from
+            xjr_base_module
+        <where>
+            F_ModuleId in(
+            select
+            F_ItemId
+            from
+            xjr_base_authorize
+            <where>
+                F_ItemType = 1 and (
+                <if test="roleIds != null and roleIds.size() > 0">
+                    (F_ObjectType = 1
+                    and F_ObjectId in
+                    <foreach collection="roleIds" separator="," close=")" open="(" item="roleId">
+                        #{roleId}
+                    </foreach>
+                    )
+                </if>
+
+                <if test="userId != null and userId != ''">
+                    <if test="roleIds != null and roleIds.size() > 0">
+                        or
+                    </if>
+                    (F_ObjectType = 2
+                    and F_ObjectId = #{userId})
+                </if>
+                )
+            </where>
+            )
+            and F_DeleteMark = 0
+            and F_EnabledMark = 1
+            and F_SubSystemId = #{systemId}
+        </where>
+        order by
+            F_SortCode asc
+    </select>
+
+
+    <select id="getModuleIdsOfAuth" resultType="java.lang.String">
+        select
+            F_ModuleId
+        from
+            xjr_base_module
+        <where>
+            F_DeleteMark = 0
+            and F_EnabledMark = 1
+            <if test="!isAdminUser">
+                and F_ModuleId in(
+                    select
+                        F_ItemId
+                    from
+                        xjr_base_authorize
+                    where
+                        F_ItemType = 1
+                        and F_ObjectId in
+                        <foreach collection="objectId" index="index" item="item" open="(" separator="," close=")">
+                            #{item}
+                        </foreach>
+                        and F_ObjectType = #{objectType}
+                )
+            </if>
+        </where>
+    </select>
+
+    <select id="getModuleBtnOfAuth" resultMap="BaseBtnResultMap">
+        select
+            *
+        from
+            xjr_base_modulebutton
+        <where>
+            F_ModuleId in
+            <foreach collection="moduleIds" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            <if test="!isAdminUser">
+                and F_ModuleButtonId in(
+                    select
+                        F_ItemId
+                    from
+                        xjr_base_authorize
+                    where
+                        F_ItemType = 2
+                        and F_ObjectId in
+                        <foreach collection="objectIds" index="index" item="item" open="(" separator="," close=")">
+                            #{item}
+                        </foreach>
+                        and F_ObjectType = #{objectType}
+                )
+            </if>
+        </where>
+    </select>
+
+    <select id="getModuleColOfAuth" resultMap="BaseColResultMap">
+        select
+            *
+        from
+            xjr_base_modulecolumn
+        <where>
+            F_ModuleId in
+            <foreach collection="moduleIds" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            <if test="!isAdminUser">
+                and F_ModuleColumnId in(
+                    select
+                        F_ItemId
+                    from
+                        xjr_base_authorize
+                    where
+                        F_ItemType = 3
+                        and F_ObjectId in
+                        <foreach collection="objectIds" index="index" item="item" open="(" separator="," close=")">
+                            #{item}
+                        </foreach>
+                        and F_ObjectType = #{objectType}
+                )
+            </if>
+        </where>
+    </select>
+
+    <select id="getModuleFormOfAuth" resultMap="BaseFormResultMap">
+        select
+            *
+        from
+        xjr_base_moduleform
+        <where>
+            F_ModuleId in
+            <foreach collection="moduleIds" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            <if test="!isAdminUser">
+                and F_ModuleFormId in(
+                    select
+                        F_ItemId
+                    from
+                        xjr_base_authorize
+                    where
+                        F_ItemType = 4
+                        and F_ObjectId in
+                        <foreach collection="objectIds" index="index" item="item" open="(" separator="," close=")">
+                            #{item}
+                        </foreach>
+                        and F_ObjectType = #{objectType}
+                )
+            </if>
+        </where>
+    </select>
+</mapper>

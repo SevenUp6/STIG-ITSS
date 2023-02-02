@@ -1,0 +1,48 @@
+#set($voPackage=$package.Entity.replace("entity","vo"))
+package $!{voPackage};
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+#foreach($pkg in $!{table.importPackages})
+import $!{pkg};
+#end
+import $!{package.Entity}.$!{entity};
+#if($!{entityLombokModel})
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+#end
+#if($!{swagger2})
+import io.swagger.annotations.ApiModel;
+#end
+
+/**
+ * $!{table.comment}视图实体类
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+#if($!{entityLombokModel})
+@Data
+##@EqualsAndHashCode(callSuper = true)
+#end
+#if($!{swagger2})
+@ApiModel(value = "$!{entity}VO对象", description = #if ("$!{table.comment}"=="")"$!{entity}VO对象"#else"$!{table.comment}"#end)
+#end
+public class $!{entity}Vo {
+	private static final long serialVersionUID = 1L;
+
+#foreach($field in $!{table.fields})
+#if($!{isMainTable} && $field.keyFlag)
+	@JsonProperty("$!{field.name}")
+	private $!{field.propertyType} $!{field.propertyName};
+
+#else
+#foreach($fieldName in $!{fieldNameList})
+#if($!{field.name.equals($fieldName)})
+	@JsonProperty("$!{field.name}")
+	private $!{field.propertyType} $!{field.propertyName};
+
+#end
+#end
+#end
+#end
+}

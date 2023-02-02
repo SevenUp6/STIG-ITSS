@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjrsoft.module.form.mapper.XjrFormSchemeInfoMapper">
+
+    <resultMap id="schemeInfoResultMap" type="com.xjrsoft.module.form.vo.FormSchemeInfoVo">
+        <id column="F_Id" jdbcType="VARCHAR" property="id" />
+        <result column="F_Name" jdbcType="VARCHAR" property="name"/>
+        <result column="F_Type" jdbcType="VARCHAR" property="type"/>
+        <result column="F_ItemName" jdbcType="VARCHAR" property="category"/>
+        <result column="F_SchemeId" jdbcType="VARCHAR" property="schemeId"/>
+        <result column="F_EnabledMark" jdbcType="VARCHAR" property="enabledMark"/>
+        <result column="F_Description" jdbcType="VARCHAR" property="description"/>
+        <result column="F_CreateDate" jdbcType="VARCHAR" property="createDate"/>
+        <result column="F_CreateUserId" jdbcType="VARCHAR" property="createUserId"/>
+        <result column="F_CreateUserName" jdbcType="VARCHAR" property="createUserName"/>
+        <result column="F_DesignType" jdbcType="VARCHAR" property="designType"/>
+    </resultMap>
+
+    <resultMap id="systemFormResultMap" type="com.xjrsoft.module.form.vo.SystemFormVo">
+        <id column="F_Id" jdbcType="VARCHAR" property="formId" />
+        <result column="F_ModuleId" jdbcType="VARCHAR" property="moduleId" />
+        <result column="F_FullName" jdbcType="VARCHAR" property="name" />
+        <result column="F_UrlAddress" jdbcType="VARCHAR" property="url" />
+        <result column="F_Component" jdbcType="VARCHAR" property="component" />
+        <result column="F_EnCode" jdbcType="VARCHAR" property="enCode" />
+        <result column="F_ParentId" jdbcType="VARCHAR" property="parentId" />
+        <association property="parentModule" select="getModuleTreeEntityVoById" column="F_ParentId"/>
+    </resultMap>
+
+    <resultMap id="moduleTreeEntityVoResultMap" type="com.xjrsoft.module.base.vo.ModuleTreeEntityVo">
+        <id column="F_ModuleId" jdbcType="VARCHAR" property="moduleId" />
+        <result column="F_ParentId" jdbcType="VARCHAR" property="parentId" />
+        <result column="F_EnCode" jdbcType="VARCHAR" property="enCode" />
+        <result column="F_FullName" jdbcType="VARCHAR" property="fullName" />
+        <result column="F_Icon" jdbcType="VARCHAR" property="icon" />
+        <result column="F_Component" jdbcType="VARCHAR" property="component" />
+        <result column="F_UrlAddress" jdbcType="VARCHAR" property="urlAddress" />
+        <result column="F_Target" jdbcType="VARCHAR" property="target" />
+        <result column="F_IsMenu" jdbcType="INTEGER" property="isMenu" />
+        <result column="F_AllowExpand" jdbcType="INTEGER" property="allowExpand" />
+        <result column="F_IsPublic" jdbcType="INTEGER" property="isPublic" />
+        <result column="F_SortCode" jdbcType="INTEGER" property="sortCode" />
+        <result column="F_EnabledMark" jdbcType="INTEGER" property="enabledMark" />
+        <association property="parentModule" select="getModuleTreeEntityVoById" column="F_ParentId"></association>
+    </resultMap>
+
+    <select id="getPageList" resultMap="schemeInfoResultMap">
+        select
+            si.F_Id,
+            si.F_Name,
+            si.F_Type,
+            dd.F_ItemName,
+            si.F_SchemeId,
+            si.F_DeleteMark,
+            si.F_EnabledMark,
+            si.F_Description,
+            si.F_CreateDate,
+            si.F_CreateUserId,
+            si.F_CreateUserName,
+            si.F_ModifyDate,
+            si.F_ModifyUserName,
+            si.F_ModifyUserId,
+            si.F_UrlAddress,
+            s.F_Type as "designType"
+        from
+            xjr_form_schemeinfo si
+        left join xjr_form_scheme s on
+            si.F_SchemeId = s.F_Id
+        left join xjr_base_dataitemdetail dd on
+            dd.F_ItemValue = si.F_Category
+        <where>
+            dd.F_ItemId = (
+                select
+                    F_ItemId
+                from
+                    xjr_base_dataitem
+                where
+                    F_ItemCode = 'FormSort')
+            <if test="keyword != null and keyword != ''">
+                and si.F_Name like #{keyword}
+            </if>
+            <if test="category != null and category != ''">
+                and si.F_Category = #{category}
+            </if>
+            and si.F_DeleteMark = 0
+            and si.F_Type = 0
+        </where>
+    </select>
+    <select id="getSystemFormList" resultMap="systemFormResultMap">
+        select
+            xfs.F_Id,
+            xbm.F_ModuleId,
+            xbm.F_FullName,
+            xbm.F_UrlAddress,
+            xbm.F_Component,
+            xbm.F_EnCode,
+            xbm.F_ParentId
+        from
+            xjr_form_schemeinfo xfs
+        left join xjr_base_module xbm on
+            xfs.F_SchemeId = xbm.F_ModuleId
+        <where>
+            xbm.F_DeleteMark = 0
+            and xbm.F_EnabledMark = 1
+            <if test="keyword != null and keyword != ''">
+                and xbm.F_FullName like #{keyword}
+            </if>
+            order by xbm.F_SortCode
+        </where>
+    </select>
+
+    <select id="getSystemFormByFormId" resultMap="systemFormResultMap">
+        select
+        xfs.F_Id,
+        xbm.F_ModuleId,
+        xbm.F_FullName,
+        xbm.F_UrlAddress,
+        xbm.F_EnCode,
+        xbm.F_ParentId
+        from
+        xjr_form_schemeinfo xfs
+        left join xjr_base_module xbm on
+        xfs.F_SchemeId = xbm.F_ModuleId
+        <where>
+            xfs.F_Id = #{formId}
+        </where>
+    </select>
+
+    <select id="getModuleTreeEntityVoById" resultMap="moduleTreeEntityVoResultMap">
+        select
+            *
+        from xjr_base_module
+        <where>
+            F_ModuleId = #{moduleId}
+        </where>
+    </select>
+</mapper>

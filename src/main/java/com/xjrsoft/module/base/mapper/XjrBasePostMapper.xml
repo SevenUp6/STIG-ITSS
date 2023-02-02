@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjrsoft.module.base.mapper.XjrBasePostMapper">
+
+    <select id="getPostsOfCompany" resultType="com.xjrsoft.module.base.vo.PostTreeVo">
+        select
+            p.F_PostId as "postId",
+            p.F_ParentId as "parentId",
+            p.F_CompanyId as "companyId",
+            p.F_DepartmentId as "departmentId",
+            d.F_FullName as "departmentName",
+            p.F_DeleteMark as "deleteMark",
+            p.F_Description as "description",
+            p.F_EnCode as "enCode",
+            p.F_Name as "name",
+            parent.F_Name as "parentName"
+        from
+            xjr_base_post p
+        left join xjr_base_department d on
+            p.F_DepartmentId = d.F_DepartmentId
+        left join xjr_base_post parent on
+            p.F_ParentId = parent.F_PostId
+        where
+            p.F_CompanyId = #{companyId}
+            <if test="departmentId != null and departmentId != ''">
+                and p.F_DepartmentId = #{departmentId}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                and p.F_Name like #{keyword}
+            </if>
+            and p.F_DeleteMark = 0
+    </select>
+</mapper>

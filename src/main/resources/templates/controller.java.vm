@@ -1,0 +1,260 @@
+#set($voPackage=$package.Entity.replace("entity","vo"))
+#set($dtoPackage=$package.Entity.replace("entity","dto"))
+package $!{package.Controller};
+
+#if($!{isPage})
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.xjrsoft.common.page.PageOutput;
+import com.xjrsoft.common.page.ConventPage;
+#end
+import java.util.List;
+#if(${isTrans})
+import com.xjrsoft.common.utils.DataTransUtil;
+#end
+import com.xjrsoft.common.result.Response;
+import com.xjrsoft.core.tool.utils.BeanUtil;
+#if($!{codeRule} && !$codeRule.equals(""))
+import com.xjrsoft.module.base.service.IXjrBaseCodeRuleService;
+#end
+import $!{dtoPackage}.$!{entity}Dto;
+import $!{dtoPackage}.Save$!{entity}FormDataDto;
+#if(($!{subTableList} && $subTableList.size() > 0))
+import $!{voPackage}.$!{entity}FormDataVo;
+#else
+import $!{voPackage}.$!{entity}Vo;
+#end
+import $!{voPackage}.$!{entity}ListVo;
+import $!{dtoPackage}.$!{entity}ListDto;
+#foreach($subTable in $!{subTableList})
+import $!{voPackage}.$!{subTable.entityName}Vo;
+import $!{package.Entity}.$!{subTable.entityName};
+import $!{dtoPackage}.$!{subTable.entityName}Dto;
+#end
+#if($!{isImport})
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.io.File;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.xjrsoft.core.tool.utils.CollectionUtil;
+import com.xjrsoft.core.tool.utils.IoUtil;
+import com.xjrsoft.module.excel.entity.XjrExcelImport;
+import com.xjrsoft.module.excel.factory.ParserFactory;
+import com.xjrsoft.module.excel.parser.ImportDataParser;
+import com.xjrsoft.module.excel.service.IXjrExcelImportService;
+import org.springframework.web.multipart.MultipartFile;
+#end
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import lombok.AllArgsConstructor;
+
+import com.xjrsoft.core.tool.utils.Func;
+import org.springframework.web.bind.annotation.*;
+#if($!{superEntityClass})
+import org.springframework.web.bind.annotation.RequestParam;
+#end
+import $!{package.Entity}.$!{entity};
+import $!{voPackage}.$!{entity}Vo;
+#set($wrapperPackage=$package.Entity.replace("entity","wrapper"))
+#if($!{cfg.hasWrapper})
+import $!{wrapperPackage}.$!{entity}Wrapper;
+#end
+import $!{package.Service}.$!{table.serviceName};
+#if($!{superControllerClassPackage})
+import $!{superControllerClassPackage};
+#end
+#if(!$!{superEntityClass})
+#end
+
+/**
+ * $!{table.comment} 控制器
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+@RestController
+@AllArgsConstructor
+@RequestMapping("/$cfg.serviceName.toLowerCase()")
+@Api(value = "$!{table.comment}", tags = "$!{table.comment}接口")
+#if($!{superControllerClass})
+public class $!{table.controllerName} extends $!{superControllerClass} {
+#else
+public class $!{table.controllerName} {
+#end
+
+#if($!{isImport})
+	private final IXjrExcelImportService importService;
+
+	private final ObjectMapper objectMapper;
+#end
+
+	private final $!{table.serviceName} $!{table.entityPath}Service;
+
+#if($!{codeRule} && !$codeRule.equals(""))
+	private final IXjrBaseCodeRuleService codeRuleService;
+#end
+
+	/**
+	 * 详情
+	 */
+	@GetMapping("/{id}")
+	@ApiOperation(value = "详情", notes = "传入$!{table.entityPath}")
+#if(($!{subTableList} && $subTableList.size() > 0))
+	public Response<$!{entity}FormDataVo> getFormData(@PathVariable String id) {
+		$!{entity}FormDataVo formDataVo = new $!{entity}FormDataVo();
+#else
+	public Response<$!{entity}Vo> getFormData(@PathVariable String id) {
+#end
+		// 主表数据
+		$!{entity} $!{table.entityPath} = $!{table.entityPath}Service.getById(id);
+#if(($!{subTableList} && $subTableList.size() > 0))
+		formDataVo.set$!{entity}Vo(BeanUtil.copy($!{table.entityPath}, $!{entity}Vo.class));
+		// 从表数据
+#else
+		return Response.ok(BeanUtil.copy($!{table.entityPath}, $!{entity}Vo.class));
+#end
+#foreach($subTable in $!{subTableList})
+		formDataVo.set$!{subTable.entityName}VoList(BeanUtil.copyList($!{table.entityPath}Service.get$!{subTable.entityName}ByParentId(id), $!{subTable.entityName}Vo.class));
+#end
+#if(($!{subTableList} && $subTableList.size() > 0))
+		return Response.ok(formDataVo);
+#end
+	}
+
+#if(!$!{isPage})
+	/**
+	 * 查询$!{table.comment}列表数据
+	 */
+	@GetMapping
+	@ApiOperation(value = "不分页", notes = "传入listVo")
+	public Response<List<$!{entity}ListVo>> getList($!{entity}ListDto listDto) {
+		List<$!{entity}> $!{table.entityPath}List = $!{table.entityPath}Service.getList(listDto);
+		return Response.ok(BeanUtil.copyList($!{table.entityPath}List, $!{entity}ListVo.class));
+	}
+
+#else
+	/**
+	 * 自定义分页 $!{table.comment}
+	 */
+	@GetMapping
+	@ApiOperation(value = "分页", notes = "传入$!{table.entityPath}")
+	public Response<PageOutput<$!{entity}ListVo>> getPageList($!{entity}ListDto listDto) {
+		IPage<$!{entity}> page = $!{table.entityPath}Service.getPageList(listDto);
+		List<$!{entity}ListVo> records = BeanUtil.copyList(page.getRecords(), $!{entity}ListVo.class);
+#if(${isTrans})
+		// 转换列表数据
+		DataTransUtil.transListShowData(records);
+#end
+		return Response.ok(ConventPage.getPageOutput(page.getTotal(), records));
+	}
+#end
+
+	/**
+	 * 新增 $!{table.comment}
+	 */
+	@PostMapping
+	@ApiOperation(value = "新增", notes = "传入$!{table.entityPath}")
+	public Response save(@RequestBody Save$!{entity}FormDataDto formDto) {
+		$!{entity}Dto $!{table.entityPath}Dto = formDto.get$!{entity}Dto();
+		$!{entity} $!{table.entityPath} = BeanUtil.copy($!{table.entityPath}Dto, $!{entity}.class);
+#foreach($subTable in $!{subTableList})
+		List<$!{subTable.entityName}Dto> $!{subTable.entityPath}DtoList = formDto.get$!{subTable.entityName}Dto();
+		List<$!{subTable.entityName}> $!{subTable.entityPath}List = BeanUtil.copyList($!{subTable.entityPath}DtoList, $!{subTable.entityName}.class);
+#end
+#if($!{isWorkflowForm})
+		String dataId = $!{table.entityPath}Service.add$!{table.entityName}($!{table.entityPath}#foreach($subTable in $!{subTableList}), $!{subTable.entityPath}List#end);
+#else
+		boolean isSuccess = $!{table.entityPath}Service.add$!{table.entityName}($!{table.entityPath}#foreach($subTable in $!{subTableList}), $!{subTable.entityPath}List#end);
+#end
+#if($!{codeRule} && !$codeRule.equals(""))
+#if($!{isWorkflowForm})
+		if (dataId != null) {
+#else
+		if (isSuccess) {
+#end
+			codeRuleService.useEncode("$!{codeRule}");
+		}
+#end
+#if($!{isWorkflowForm})
+		return dataId == null ? Response.notOk() : Response.ok(dataId);
+#else
+		return Response.status(isSuccess);
+#end
+	}
+
+	/**
+	 * 修改 $!{table.comment}
+	 */
+	@PutMapping("/{id}")
+	@ApiOperation(value = "修改", notes = "传入$!{table.entityPath}")
+	public Response update(@PathVariable String id, @RequestBody Save$!{entity}FormDataDto formDto) {
+		$!{entity}Dto $!{table.entityPath}Dto = formDto.get$!{entity}Dto();
+		$!{entity} $!{table.entityPath} = BeanUtil.copy($!{table.entityPath}Dto, $!{entity}.class);
+#foreach($subTable in $!{subTableList})
+
+		List<$!{subTable.entityName}Dto> $!{subTable.entityPath}DtoList = formDto.get$!{subTable.entityName}Dto();
+		List<$!{subTable.entityName}> $!{subTable.entityPath}List = BeanUtil.copyList($!{subTable.entityPath}DtoList, $!{subTable.entityName}.class);
+#end
+		return Response.status($!{table.entityPath}Service.update$!{table.entityName}(id, $!{table.entityPath}#foreach($subTable in $!{subTableList}), $!{subTable.entityPath}List#end));
+	}
+
+##	/**
+##	 * 新增或修改 $!{table.comment}
+##	 */
+##	@PostMapping("/submit")
+##	@ApiOperation(value = "新增或修改", notes = "传入$!{table.entityPath}")
+##	public Response submit(@Valid @RequestBody $!{entity} $!{table.entityPath}) {
+##		return Response.status($!{table.entityPath}Service.saveOrUpdate($!{table.entityPath}));
+##	}
+
+	#if($!{superEntityClass})
+
+	/**
+	 * 删除 $!{table.comment}
+	 */
+	@PostMapping("/remove")
+	@ApiOperation(value = "逻辑删除", notes = "传入ids")
+	public Response remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
+		return Response.status($!{table.entityPath}Service.deleteLogic(Func.toLongList(ids)));
+	}
+
+	#else
+
+	/**
+	 * 删除 $!{table.comment}
+	 */
+	@DeleteMapping("/{ids}")
+	@ApiOperation(value = "删除", notes = "传入ids")
+	public Response remove(@ApiParam(value = "主键集合", required = true) @PathVariable String ids) {
+		return Response.status($!{table.entityPath}Service.removeByIds(Func.toStrList(ids)));
+	}
+
+	#end
+
+#if($!{isImport})
+	/**
+	 * excel批量导入数据
+	 */
+	@PostMapping("/import")
+	@ApiOperation(value = "excel批量导入数据", notes = "传入菜单id")
+	public Response importData(@RequestParam("F_ModuleId") String moduleId, MultipartFile file) {
+		XjrExcelImport excelImport = importService.getByModuleId(moduleId);
+		ImportDataParser parser = ParserFactory.getImportDataParser();
+		File excelFile = IoUtil.toFile(file);
+		List<Map<String, Object>> recordList = parser.parseDataToMap(excelImport, excelFile);
+		if (CollectionUtil.isNotEmpty(recordList)) {
+			List<$!{entity}Dto> entityDtoList = recordList.stream().map(record -> {
+				try {
+					return objectMapper.readValue(objectMapper.writeValueAsString(record), $!{entity}Dto.class);
+				} catch (JsonProcessingException e) {
+				}
+				return null;
+			}).collect(Collectors.toList());
+			List<$!{entity}> entities = BeanUtil.copyList(entityDtoList, $!{entity}.class);
+			return Response.status($!{table.entityPath}Service.saveBatch(entities));
+		}
+		return Response.notOk();
+	}
+#end
+}

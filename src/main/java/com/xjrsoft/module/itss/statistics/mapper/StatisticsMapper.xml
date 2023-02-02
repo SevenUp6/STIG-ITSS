@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjrsoft.module.itss.statistics.mapper.StatisticsMapper">
+
+    <select id="getSbgzData" resultType="com.xjrsoft.module.itss.statistics.vo.StatisticsSbgzVo">
+        select r.type_id , r.type_name,count(r.mod_id) count,r.mod_name  from repair_order r
+
+        <where>
+            status=9
+            <if test="type_id != null and type_id != ''">
+                and type_id = #{type_id}
+            </if>
+            <if test="start != null and start != ''">
+                and date_format(repair_time,'%Y-%m-%d') &gt;= #{start}
+            </if>
+            <if test="end != null and end != ''">
+                and date_format(repair_time,'%Y-%m-%d') &lt;= #{end}
+            </if>
+        </where>
+        group by mod_name,r.type_id,r.type_name
+    </select>
+
+ <select id="getGzlxData" resultType="com.xjrsoft.module.itss.statistics.vo.StatisticsGzlxVo">
+        select r.type_id , r.type_name,count(r.fau_id) count,r.mod_id,r.mod_name,
+           r.fau_name      from repair_order r
+        <where>
+            status=9
+            <if test="type_id != null and type_id != ''">
+                and type_id = #{type_id}
+            </if>
+            <if test="mod_id != null and mod_id != ''">
+                and mod_id = #{mod_id}
+            </if>
+            <if test="start != null and start != ''">
+                and date_format(repair_time,'%Y-%m-%d') &gt;= #{start}
+            </if>
+            <if test="end != null and end != ''">
+                and date_format(repair_time,'%Y-%m-%d') &lt;= #{end}
+            </if>
+        </where>
+        group by mod_name,r.type_id,r.type_name,r.mod_id,r.fau_id,r.fau_name
+    </select>
+
+    <select id="getGdclData_0" resultType="com.xjrsoft.module.itss.statistics.vo.StatisticsGdlx0Vo">
+        select m.repair_usrname,sum(m.count) count,sum(m.count2) count2 from (
+        SELECT r.repair_usrname, count(r.id) count,''count2  FROM repair_order r
+        <where>
+            status = 9
+            <if test="type_id != null and type_id != ''">
+                and type_id = #{type_id}
+            </if>
+            <if test="start != null and start != ''">
+                and date_format(assign_time,'%Y-%m-%d') = #{start}
+            </if>
+        </where>
+        GROUP BY repair_usrname
+        union
+        SELECT r.repair_usrname, ''count,count(r.id) count2  FROM repair_order r
+        <where>
+            status =0
+            <if test="type_id != null and type_id != ''">
+                and type_id = #{type_id}
+            </if>
+            <if test="start != null and start != ''">
+                and date_format(assign_time,'%Y-%m-%d') = #{start}
+            </if>
+        </where>
+        GROUP BY repair_usrname
+        ) m
+        GROUP BY repair_usrname
+
+    </select>
+
+    <select id="getClsxData" resultType="com.xjrsoft.module.itss.statistics.vo.StatisticsClsxVo">
+        select  r.repair_usrname,
+        sum(timestampdiff(MINUTE,r.assign_time,r.repair_time)/60) hours
+        from repair_order r
+        <where>
+            status=9
+            <if test="type_id != null and type_id != ''">
+                and type_id = #{type_id}
+            </if>
+            <if test="start != null and start != ''">
+                and date_format(repair_time,'%Y-%m-%d') = #{start}
+            </if>
+
+        </where>
+         group by repair_usrname
+    </select>
+
+    <select id="getGdslData" resultType="com.xjrsoft.module.itss.statistics.vo.StatisticsGdslVo">
+        select  type_name,sum(count9)sum9,sum(count0)sum0,sum(count0+count9) sum
+        from(
+            select type_name,count(id)count9,''count0 from repair_order r
+            where status=9 and CONVERT( created_time, date) =date_sub(curdate(),interval 1 day)
+            GROUP BY type_name
+            union
+            select type_name,''count9,count(id)count0 from repair_order r
+            where status =0 and CONVERT( created_time, date) =date_sub(curdate(),interval 1 day)
+            GROUP BY type_name
+            ) m
+        GROUP BY m.type_name
+    </select>
+
+   <select id="getGdmxData" resultType="com.xjrsoft.module.itss.statistics.vo.StatisticsClsxVo">
+        select  r.repair_usrname,
+        sum(timestampdiff(MINUTE,r.assign_time,r.repair_time)/60) hours
+        from repair_order r
+        <where>
+            status=9
+            <if test="type_id != null and type_id != ''">
+                and type_id = #{type_id}
+            </if>
+            <if test="start != null and start != ''">
+                and date_format(repair_time,'%Y-%m-%d') = #{start}
+            </if>
+
+        </where>
+         group by repair_usrname
+    </select>
+
+</mapper>

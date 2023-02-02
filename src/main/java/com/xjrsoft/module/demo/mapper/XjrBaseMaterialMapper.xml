@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjrsoft.module.demo.mapper.XjrBaseMaterialMapper">
+
+    <resultMap id="materialResultMap" type="com.xjrsoft.module.demo.vo.MaterialVo">
+        <id column="F_Id" jdbcType="VARCHAR" property="id"/>
+        <result column="F_Name" jdbcType="VARCHAR" property="name"/>
+        <result column="F_Price" jdbcType="NUMERIC" property="price"/>
+        <result column="F_Count" jdbcType="INTEGER" property="count"/>
+        <result column="F_Discount" jdbcType="NUMERIC" property="discount"/>
+        <result column="F_MinHeight" jdbcType="NUMERIC" property="minHeight"/>
+        <result column="F_MaxHeight" jdbcType="NUMERIC" property="maxHeight"/>
+        <result column="F_OrderId" jdbcType="VARCHAR" property="orderId"/>
+        <result column="F_ItemId" jdbcType="VARCHAR" property="itemId"/>
+    </resultMap>
+
+    <select id="getMaterialsByItemIds" resultMap="materialResultMap">
+        select
+            m.*,
+            il.F_OrderId,
+            il.F_ItemId
+        from
+            xjr_base_material m
+        left join xjr_base_itemrelation il on
+            m.F_Id = il.F_MaterialId
+            and il.F_Category = 2
+        <where>
+            il.F_OrderId = #{orderId}
+            and il.F_ItemId in
+            <foreach collection="itemIdList" item="itemId" open="(" close=")" separator=",">
+                #{itemId}
+            </foreach>
+        </where>
+    </select>
+</mapper>

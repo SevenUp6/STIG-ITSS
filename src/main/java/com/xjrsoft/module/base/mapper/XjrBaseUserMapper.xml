@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjrsoft.module.base.mapper.XjrBaseUserMapper">
+
+    <resultMap id="userVoBaseResultMap" type="com.xjrsoft.module.base.vo.UserVo">
+        <id column="F_UserId" jdbcType="VARCHAR" property="userId" />
+        <result column="F_EnCode" jdbcType="VARCHAR" property="enCode" />
+        <result column="F_Account" jdbcType="VARCHAR" property="account" />
+        <result column="F_Password" jdbcType="VARCHAR" property="password" />
+        <result column="F_Secretkey" jdbcType="VARCHAR" property="secretkey" />
+        <result column="F_RealName" jdbcType="VARCHAR" property="realName" />
+        <result column="F_NickName" jdbcType="VARCHAR" property="nickName" />
+        <result column="F_HeadIcon" jdbcType="VARCHAR" property="headIcon" />
+        <result column="F_QuickQuery" jdbcType="VARCHAR" property="quickQuery" />
+        <result column="F_SimpleSpelling" jdbcType="VARCHAR" property="simpleSpelling" />
+        <result column="F_Gender" jdbcType="INTEGER" property="gender" />
+        <result column="F_Birthday" jdbcType="TIMESTAMP" property="birthday" />
+        <result column="F_Mobile" jdbcType="VARCHAR" property="mobile" />
+        <result column="F_Telephone" jdbcType="VARCHAR" property="telephone" />
+        <result column="F_Email" jdbcType="VARCHAR" property="email" />
+        <result column="F_OICQ" jdbcType="VARCHAR" property="oicq" />
+        <result column="F_WeChat" jdbcType="VARCHAR" property="weChat" />
+        <result column="F_MSN" jdbcType="VARCHAR" property="msn" />
+        <result column="F_CompanyId" jdbcType="VARCHAR" property="companyId" />
+        <result column="F_SecurityLevel" jdbcType="INTEGER" property="securityLevel" />
+        <result column="F_OpenId" jdbcType="INTEGER" property="openId" />
+        <result column="F_Question" jdbcType="VARCHAR" property="question" />
+        <result column="F_AnswerQuestion" jdbcType="VARCHAR" property="answerQuestion" />
+        <result column="F_CheckOnLine" jdbcType="INTEGER" property="checkOnLine" />
+        <result column="F_AllowStartTime" jdbcType="TIMESTAMP" property="allowStartTime" />
+        <result column="F_AllowEndTime" jdbcType="TIMESTAMP" property="allowEndTime" />
+        <result column="F_LockStartDate" jdbcType="TIMESTAMP" property="lockStartDate" />
+        <result column="F_LockEndDate" jdbcType="TIMESTAMP" property="lockEndDate" />
+        <result column="F_SortCode" jdbcType="INTEGER" property="sortCode" />
+        <result column="F_DeleteMark" jdbcType="INTEGER" property="deleteMark" />
+        <result column="F_EnabledMark" jdbcType="INTEGER" property="enabledMark" />
+        <result column="F_Description" jdbcType="VARCHAR" property="description" />
+<!--        <result column="F_CreateDate" jdbcType="TIMESTAMP" property="createDate" />-->
+        <result column="F_CreateUserId" jdbcType="VARCHAR" property="createUserId" />
+<!--        <result column="F_CreateUserName" jdbcType="VARCHAR" property="createUserName" />-->
+<!--        <result column="F_ModifyDate" jdbcType="TIMESTAMP" property="modifyDate" />-->
+<!--        <result column="F_ModifyUserId" jdbcType="VARCHAR" property="modifyUserId" />-->
+<!--        <result column="F_ModifyUserName" jdbcType="VARCHAR" property="modifyUserName" />-->
+        <result column="F_Token" jdbcType="VARCHAR" property="token" />
+        <collection property="departmentSimpleVoList" column="F_UserId" select="getDepartmentSimpleVo"
+                    javaType="ArrayList" ofType="com.xjrsoft.module.base.vo.DepartmentSimpleVo" >
+        </collection>
+    </resultMap>
+
+    <resultMap id="roleBaseResultMap" type="com.xjrsoft.module.base.entity.XjrBaseRole">
+        <id column="F_RoleId" jdbcType="VARCHAR" property="roleId" />
+        <result column="F_Category" jdbcType="VARCHAR" property="category" />
+        <result column="F_EnCode" jdbcType="VARCHAR" property="enCode" />
+        <result column="F_FullName" jdbcType="VARCHAR" property="fullName" />
+        <result column="F_SortCode" jdbcType="INTEGER" property="sortCode" />
+        <result column="F_DeleteMark" jdbcType="INTEGER" property="deleteMark" />
+        <result column="F_EnabledMark" jdbcType="INTEGER" property="enabledMark" />
+        <result column="F_Description" jdbcType="VARCHAR" property="description" />
+        <result column="F_CreateDate" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="F_CreateUserId" jdbcType="VARCHAR" property="createUserId" />
+        <result column="F_CreateUserName" jdbcType="VARCHAR" property="createUserName" />
+        <result column="F_ModifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+        <result column="F_ModifyUserId" jdbcType="VARCHAR" property="modifyUserId" />
+        <result column="F_ModifyUserName" jdbcType="VARCHAR" property="modifyUserName" />
+    </resultMap>
+    <resultMap id="departmentBaseResultMap" type="com.xjrsoft.module.base.entity.XjrBaseDepartment">
+        <id column="F_DepartmentId" jdbcType="VARCHAR" property="departmentId" />
+        <result column="F_CompanyId" jdbcType="VARCHAR" property="companyId" />
+        <result column="F_ParentId" jdbcType="VARCHAR" property="parentId" />
+        <result column="F_EnCode" jdbcType="VARCHAR" property="enCode" />
+        <result column="F_FullName" jdbcType="VARCHAR" property="fullName" />
+        <result column="F_ShortName" jdbcType="VARCHAR" property="shortName" />
+        <result column="F_Nature" jdbcType="VARCHAR" property="nature" />
+        <result column="F_Manager" jdbcType="VARCHAR" property="manager" />
+        <result column="F_OuterPhone" jdbcType="VARCHAR" property="outerPhone" />
+        <result column="F_InnerPhone" jdbcType="VARCHAR" property="innerPhone" />
+        <result column="F_Email" jdbcType="VARCHAR" property="email" />
+        <result column="F_Fax" jdbcType="VARCHAR" property="fax" />
+        <result column="F_SortCode" jdbcType="INTEGER" property="sortCode" />
+        <result column="F_DeleteMark" jdbcType="INTEGER" property="deleteMark" />
+        <result column="F_EnabledMark" jdbcType="INTEGER" property="enabledMark" />
+        <result column="F_CreateDate" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="F_CreateUserId" jdbcType="VARCHAR" property="createUserId" />
+        <result column="F_CreateUserName" jdbcType="VARCHAR" property="createUserName" />
+        <result column="F_ModifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+        <result column="F_ModifyUserId" jdbcType="VARCHAR" property="modifyUserId" />
+        <result column="F_ModifyUserName" jdbcType="VARCHAR" property="modifyUserName" />
+        <result column="F_DingTalkId" jdbcType="VARCHAR" property="dingTalkId" />
+    </resultMap>
+
+    <resultMap id="postBaseResultMap" type="com.xjrsoft.module.base.entity.XjrBasePost">
+        <id column="F_PostId" jdbcType="VARCHAR" property="postId" />
+        <result column="F_DepartmentId" jdbcType="VARCHAR" property="departmentId" />
+        <result column="F_CompanyId" jdbcType="VARCHAR" property="companyId" />
+        <result column="F_ParentId" jdbcType="VARCHAR" property="parentId" />
+        <result column="F_EnCode" jdbcType="VARCHAR" property="enCode" />
+        <result column="F_Name" jdbcType="VARCHAR" property="name" />
+        <result column="F_Description" jdbcType="VARCHAR" property="description" />
+        <result column="F_DeleteMark" jdbcType="INTEGER" property="deleteMark" />
+        <result column="F_CreateDate" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="F_CreateUserId" jdbcType="VARCHAR" property="createUserId" />
+        <result column="F_CreateUserName" jdbcType="VARCHAR" property="createUserName" />
+        <result column="F_ModifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+        <result column="F_ModifyUserId" jdbcType="VARCHAR" property="modifyUserId" />
+        <result column="F_ModifyUserName" jdbcType="VARCHAR" property="modifyUserName" />
+    </resultMap>
+
+    <resultMap id="userInfoVoResultMap" type="com.xjrsoft.module.base.vo.UserInfoVo">
+        <id column="F_Id"/>
+        <association property="userSimpleInfoVo" javaType="com.xjrsoft.module.base.vo.UserSimpleInfoVo" columnPrefix="user.">
+            <id column="F_UserId" jdbcType="VARCHAR" property="userId" />
+            <result column="F_Account" jdbcType="VARCHAR" property="account"/>
+            <result column="F_UserEnCode" jdbcType="VARCHAR" property="enCode"/>
+            <result column="F_HeadIcon" jdbcType="VARCHAR" property="headIcon"/>
+            <result column="F_NickName" jdbcType="VARCHAR" property="nickName"/>
+            <result column="F_RealName" jdbcType="VARCHAR" property="realName"/>
+            <result column="F_Gender" jdbcType="INTEGER" property="gender"/>
+            <result column="F_Mobile" jdbcType="VARCHAR" property="mobile"/>
+        </association>
+        <association property="companySimpleInfoVo" javaType="com.xjrsoft.module.base.vo.CompanySimpleInfoVo" columnPrefix="c.">
+            <id column="F_CompanyId" jdbcType="VARCHAR" property="companyId" />
+            <result column="F_Category" jdbcType="VARCHAR" property="category"/>
+            <result column="F_CompanyEnCode" jdbcType="VARCHAR" property="enCode"/>
+            <result column="F_CompanyParentId" jdbcType="VARCHAR" property="parentId"/>
+            <result column="F_CompanyShortName" jdbcType="VARCHAR" property="shortName"/>
+            <result column="F_CompanyName" jdbcType="VARCHAR" property="fullName"/>
+        </association>
+        <collection property="departmentSimpleVoList" ofType="com.xjrsoft.module.base.vo.DepartmentSimpleVo" columnPrefix="d." >
+            <id column="F_DepartmentId" jdbcType="VARCHAR" property="departmentId"/>
+            <result column="F_DepartmentEnCode" jdbcType="VARCHAR" property="enCode"/>
+            <!--            <result column="F_ParentId" jdbcType="VARCHAR" property="pa"/>-->
+            <!--            <result column="F_DepartmentShortName" jdbcType="VARCHAR" property="nickName"/>-->
+            <result column="F_DepartmentFullName" jdbcType="VARCHAR" property="departmentName"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="simpleDepartmentVoMap" type="com.xjrsoft.module.base.vo.DepartmentSimpleVo">
+        <id column="F_DepartmentId" jdbcType="VARCHAR" property="departmentId" />
+        <result column="F_FullName" jdbcType="VARCHAR" property="departmentName" />
+    </resultMap>
+
+    <select id="queryRolesOfUser" resultMap="roleBaseResultMap">
+        select
+            xbr.*
+        from
+            xjr_base_role xbr
+        left join xjr_base_userrelation xbu on
+            xbr.F_RoleId = xbu.F_ObjectId
+            and xbu.F_Category = 1
+        where
+            xbu.F_UserId = #{param1}
+            and xbr.F_DeleteMark = 0
+            and xbr.F_EnabledMark = 1
+    </select>
+
+    <select id="queryDepartmentsOfUser" resultMap="departmentBaseResultMap">
+        select
+            xbd.*
+        from
+            xjr_base_department xbd
+        left join xjr_base_userrelation xbu on
+            xbd.F_DepartmentId = xbu.F_ObjectId
+            and xbu.F_Category = 3
+        where
+            xbu.F_UserId = #{param1}
+            and xbd.F_DeleteMark = 0
+            and xbd.F_EnabledMark = 1
+    </select>
+
+    <select id="queryPostsOfUser" resultMap="postBaseResultMap">
+        select
+            xbp.*
+        from
+            xjr_base_post xbp
+        left join xjr_base_userrelation xbu on
+            xbp.F_PostId = xbu.F_ObjectId
+            and xbu.F_Category = 2
+        where
+            xbu.F_UserId = #{param1}
+            and xbp.F_DeleteMark = 0
+    </select>
+
+    <select id="pageList" resultMap="userVoBaseResultMap">
+        select
+            u.*
+        from
+            xjr_base_user u
+        <if test="departmentId != null and departmentId !=''">
+        left join xjr_base_userrelation ur on
+            ur.F_UserId = u.F_UserId
+            and ur.F_Category = 3
+        </if>
+        <where>
+            <if test="companyId != null and companyId !=''">
+                and u.F_CompanyId = #{companyId}
+            </if>
+            <if test="departmentId != null and departmentId !=''">
+                and ur.F_ObjectId = #{departmentId}
+            </if>
+            <if test="keyword != null and keyword !=''">
+                and u.F_RealName like #{keyword}
+            </if>
+            and u.F_DeleteMark = 0
+            and u.F_EnabledMark = 1
+        </where>
+    </select>
+
+    <select id="getMultiUsersInfo" resultMap="userInfoVoResultMap">
+        select
+            u.F_UserId as "F_Id",
+            u.F_Account as "user.F_Account",
+            u.F_UserId as "user.F_UserId",
+            u.F_EnCode as "user.F_UserEnCode",
+            u.F_HeadIcon as "user.F_HeadIcon",
+            u.F_NickName as "user.F_NickName",
+            u.F_RealName as "user.F_RealName",
+            u.F_Gender as "user.F_Gender",
+            u.F_Mobile as "user.F_Mobile",
+            c.F_CompanyId as "c.F_CompanyId",
+            c.F_Category as "c.F_Category",
+            c.F_ParentId as "c.F_CompanyParentId",
+            c.F_EnCode as "c.F_CompanyEnCode",
+            c.F_ShortName as "c.F_CompanyShortName",
+            c.F_FullName as "c.F_CompanyFullName",
+            d.F_DepartmentId as "d.F_DepartmentId",
+            d.F_EnCode as "d.F_DepartmentEnCode",
+            d.F_ParentId as "d.F_DepartmentParentId",
+            d.F_ShortName as "d.F_DepartmentShortName",
+            d.F_FullName as "d.F_DepartmentFullName"
+        from
+            xjr_base_user u
+        left join xjr_base_company c on
+            u.F_CompanyId = c.F_CompanyId
+        left join xjr_base_userrelation ur on
+            u.F_UserId = ur.F_UserId
+            and ur.F_Category = 3
+        left join xjr_base_department d on
+            d.F_DepartmentId = ur.F_ObjectId
+        <where>
+            u.F_UserId in
+            <foreach collection="userIds" item="userId" open="(" close=")" separator=",">
+                #{userId}
+            </foreach>
+        </where>
+    </select>
+
+    <select id="getDepartmentSimpleVo" resultMap="simpleDepartmentVoMap">
+        select
+            xbd.F_DepartmentId,
+            xbd.F_FullName,
+            xbd.F_EnCode,
+            xbd.F_CreateUserId
+        from
+            xjr_base_department xbd
+        left join xjr_base_userrelation ur
+            on ur.F_ObjectId = xbd.F_DepartmentId
+            and ur.F_Category = 3
+        where
+            ur.F_UserId = #{F_UserId}
+    </select>
+</mapper>

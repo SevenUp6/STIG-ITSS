@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjrsoft.module.form.mapper.XjrFormRelationMapper">
+
+    <resultMap id="formRelationVoMap" type="com.xjrsoft.module.form.vo.FormRelationVo">
+        <id column="F_Id" jdbcType="VARCHAR" property="id" />
+        <result column="F_FormId" jdbcType="VARCHAR" property="formId" />
+        <result column="F_ModuleId" jdbcType="VARCHAR" property="moduleId" />
+        <result column="F_ModuleName" jdbcType="VARCHAR" property="moduleName" />
+        <result column="F_FormName" jdbcType="VARCHAR" property="formName" />
+        <result column="F_SettingJson" jdbcType="LONGVARCHAR" property="settingJson" />
+        <result column="F_CreateDate" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="F_CreateUserId" jdbcType="VARCHAR" property="createUserId" />
+        <result column="F_CreateUserName" jdbcType="VARCHAR" property="createUserName" />
+        <association property="module" javaType="com.xjrsoft.module.form.vo.ModuleFormVo">
+            <result column="F_ModuleId" jdbcType="VARCHAR" property="moduleId" />
+            <result column="F_ParentId" jdbcType="VARCHAR" property="parentId" />
+            <result column="F_EnCode" jdbcType="VARCHAR" property="enCode" />
+            <result column="F_FullName" jdbcType="VARCHAR" property="fullName" />
+            <result column="F_Icon" jdbcType="VARCHAR" property="icon" />
+            <result column="F_Component" jdbcType="VARCHAR" property="component" />
+            <result column="F_UrlAddress" jdbcType="VARCHAR" property="urlAddress" />
+            <result column="F_Target" jdbcType="VARCHAR" property="target" />
+            <result column="F_IsMenu" jdbcType="DOUBLE" property="isMenu" />
+            <result column="F_AllowExpand" jdbcType="DOUBLE" property="allowExpand" />
+            <result column="F_IsPublic" jdbcType="DOUBLE" property="isPublic" />
+            <result column="F_AllowEdit" jdbcType="DOUBLE" property="allowEdit" />
+            <result column="F_AllowDelete" jdbcType="DOUBLE" property="allowDelete" />
+            <result column="F_SortCode" jdbcType="DOUBLE" property="sortCode" />
+            <result column="F_DeleteMark" jdbcType="DOUBLE" property="deleteMark" />
+            <result column="F_EnabledMark" jdbcType="DOUBLE" property="enabledMark" />
+            <result column="F_Description" jdbcType="VARCHAR" property="description" />
+            <result column="F_SubSystemId" jdbcType="VARCHAR" property="subSystemId" />
+        </association>
+    </resultMap>
+<!--    <resultMap extends="formRelationVoMap" id="formRelationVoMapWithBLOBs" type="com.xjrsoft.module.form.vo.FormRelationVo">-->
+<!--        <result column="F_SettingJson" jdbcType="LONGVARCHAR" property="settingJson" />-->
+<!--    </resultMap>-->
+
+    <select id="getPageList" resultMap="formRelationVoMap">
+        select
+            xfs.F_Name as "F_FormName",
+            xbm.F_FullName as "F_ModuleName",
+            xfr.F_Id,
+            xfr.F_FormId,
+            xfr.F_ModuleId,
+            xfr.F_SettingJson,
+            xfr.F_CreateDate,
+            xfr.F_CreateUserId,
+            xfr.F_CreateUserName,
+--             xbm.F_ModuleId,
+            xbm.F_ParentId,
+            xbm.F_EnCode,
+            xbm.F_FullName,
+            xbm.F_Icon,
+            xbm.F_Component,
+            xbm.F_UrlAddress,
+            xbm.F_Target,
+            xbm.F_IsMenu,
+            xbm.F_AllowExpand,
+            xbm.F_IsPublic,
+            xbm.F_AllowEdit,
+            xbm.F_AllowDelete,
+            xbm.F_SortCode,
+            xbm.F_DeleteMark,
+            xbm.F_EnabledMark,
+            xbm.F_Description,
+            xbm.F_SubSystemId
+        from
+            xjr_form_relation xfr
+        left join xjr_form_schemeinfo xfs on
+            xfr.F_FormId = xfs.F_Id
+        left join xjr_base_module xbm on
+            xbm.F_ModuleId = xfr.F_ModuleId
+        <where>
+            <if test="keyword != null and keyword !=''">
+                (xfs.F_Name like #{keyword} or xbm.F_FullName like #{keyword})
+            </if>
+            and xfs.F_DeleteMark = 0
+            and xfs.F_EnabledMark = 1
+        </where>
+    </select>
+</mapper>

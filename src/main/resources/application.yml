@@ -1,0 +1,156 @@
+server:
+  port: 2828
+#  servlet:
+#    encoding:
+#      charset: UTF-8
+#      force: true
+#      enabled: true
+
+spring:
+  datasource:
+    druid:
+      stat-view-servlet:
+        enabled: true
+        loginUsername: admin
+        loginPassword: 123456
+    dynamic:
+      primary: master
+      datasource:
+        master:
+          # mysql数据库连接
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://8.142.92.214:3306/stig_itss?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true
+          username: tonghaijie
+          password: 1qaz@WSX
+#          url: jdbc:mysql://127.0.0.1:3306/stig_itss?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true
+#          username: root
+#          password: stig1234
+#          password: 123qwe!@#  150密码
+          hikari:
+            # 自动提交从池中返回的连接
+            auto-commit: true
+            # 连接池中维护的最小空闲连接数
+            minimum-idle: 10
+            # 连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count)
+            maximum-pool-size: 60
+            # 空闲连接超时时间，默认值600000（10分钟），大于等于max-lifetime且max-lifetime>0，会被重置为0；不等于0且小于10秒，会被重置为10秒。
+            # 只有空闲间连接数大于最大连接数且空闲时超过该值，才会被释放
+            idle-timeout: 30000
+            # 连接最大存活时间.不等于0且小于30秒，会被重置为默认值30分钟.设置应该比mysql设置的超时时间短
+            max-lifetime: 60000
+            # 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 缺省:30秒
+            connection-timeout: 30000
+            validation-timeout: 3000
+            login-timeout: 5
+  # redis
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 5000
+    #password: 123456
+    database: 1
+    pool:
+      minIdle: 1
+      maxIdle: 10
+      maxWait: 3
+      maxActive: 8
+  servlet:
+    # 文件上传
+    multipart:
+      max-file-size: 100MB # 单个文件大小
+      max-request-size: 100MB  # 总上传的数据大小
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
+  mapper-locations: classpath:com/xjrsoft/module/**/mapper/*.xml
+  global-config:
+    db-config:
+      logic-delete-field: F_DeleteMark  # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+      id-type: uuid
+
+xjrsoft:
+  global-config:
+    # 代码生成器，前端项目路径
+    fontProjectPath: C:\WorkSpace\xjrsoft_new
+
+    isOpenAuth: false #是否开启权限验证
+    exceptionEnabled: false #是否打开错误友好提示
+    localDbString: localDB #本地数据库 参数 字符串
+    ipLimitConfig:
+      enabled: false #阀门控制是否限流
+      whiteIpList: [] #ip白名单
+      whiteApiList: [] #api白名单
+      time: 10 #时长
+      hits: 3 #次数
+    logblackApiList: /workflow-task/create-processform,/data-items/,/code-rules/,/workflow-task/create-process/
+    xssConfig:
+      enabled: true #阀门控制是否控制xss
+      whiteIpList: [] #ip白名单
+      whiteApiList: [] #a
+    wps:
+      app_id:
+      appsecret:
+      download_url: https://natappfree.cn.utools.club
+    dingtalk:
+      AppKey:
+      AppSecret:
+    EnterpriseWeChat:
+      corpid:
+      secret:
+      secret1:
+      agentid: 1000003
+    Email:
+      host:  #邮件服务器的SMTP地址，可选，默认为smtp.<发件人邮箱后缀>
+      port:  # 邮件服务器的SMTP端口，可选，默认25
+      auth: true
+      from:  # 发件人（必须正确，否则发送失败
+      user: # 用户名，默认为发件人邮箱前缀
+      pass:       # 密码（注意，某些邮箱需要为SMTP服务单独设置授权码，详情查看相关帮助
+    enabled_subSystem: true
+    # 超级管理员信息配置
+    admin-user-info:
+      account: admin
+      password: 000000
+
+
+# 验证码配置
+sms:
+  huawei:
+    url: https://rtcsms.cn-north-1.myhuaweicloud.com:10743/sms/batchSendSms/v1 # APP接入地址+接口访问URI
+    appKey:
+    appSecret:
+    sender:     # 验证码类发送人手机号通道号
+    messagesender:   # 通知类发送人手机号通道号
+    signature: 湘北智造    # 签名名称
+    login:
+      templateId:   # 手机登录验证 模板ID
+    reset:
+      templateId:   # 忘记密码-验证手机号码 模板ID
+    message:
+      templateId:   # 消息管理发送短信通道码
+
+
+#文件上传/下载
+file:
+  upload:
+    path: C:\WorkSpace\temp\   #文件上传目标路径
+    allowTypes:             #文件上传允许的类型
+      - jpeg
+      - png
+      - bmp
+      - pdf
+      - docx
+      - doc
+      - xlsx
+      - xls
+      - pptx
+      - ppt
+      - jpg
+      - txt
+    maxFileSize: 10240   #单个文件大小(KB)
+    maxRequestSize: 1024000   #总文件大小(KB)
+

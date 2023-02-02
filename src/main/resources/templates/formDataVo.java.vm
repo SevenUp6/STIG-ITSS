@@ -1,0 +1,34 @@
+#set($voPackage=$package.Entity.replace("entity","vo"))
+package $!{voPackage};
+
+#if($subTableList && $subTableList.size()>0)
+import java.util.List;
+#end
+#if($!{entityLombokModel})
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+    ##import lombok.EqualsAndHashCode;
+#end
+
+/**
+ * 保存$!{table.comment}数据传输对象实体类
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+#if($!{entityLombokModel})
+@Data
+#end
+public class $!{entity}FormDataVo {
+    private static final long serialVersionUID = 1L;
+
+    @JsonProperty("$!{table.name}")
+    private $!{entity}Vo $!{table.entityPath}Vo;
+
+#foreach($subTable in $!{subTableList})
+    @JsonProperty("$!{subTable.name}")
+    private List<$!{subTable.entityName}Vo> $!{subTable.entityPath}VoList;
+
+#end
+
+}

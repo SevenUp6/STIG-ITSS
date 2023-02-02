@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjrsoft.module.base.mapper.XjrBaseDataItemDetailMapper">
+
+    <select id="getDataItemDetailListByCode" resultType="com.xjrsoft.module.base.entity.XjrBaseDataItemDetail">
+        select
+            F_ItemDetailId as "itemDetailId",
+            F_ItemId as "itemId",
+            F_ParentId as "parentId",
+            F_ItemCode as "itemCode",
+            F_ItemName as "itemName",
+            F_ItemValue as "itemValue",
+            F_QuickQuery as "quickQuery",
+            F_SimpleSpelling as "simpleSpelling",
+            F_IsDefault as "isDefault",
+            F_SortCode as "sortCode",
+            F_EnabledMark as "enabledMark",
+            F_Description as "description"
+        from
+            xjr_base_dataitemdetail
+        where
+            F_ItemId IN (
+            select
+                F_ItemId
+            from
+                xjr_base_dataitem
+            where
+                F_ItemCode = #{itemCode} and F_DeleteMark = 0)
+            <if test="keyword != null and keyword != ''">
+                and (F_ItemName like #{keyword} or F_ItemValue like #{keyword})
+            </if>
+            and F_DeleteMark = 0
+            order by F_SortCode ASC
+    </select>
+</mapper>

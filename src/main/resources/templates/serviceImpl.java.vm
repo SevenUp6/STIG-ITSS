@@ -1,0 +1,252 @@
+package $!{package.ServiceImpl};
+#if(!$dbLinkId.equals("localDB"))
+import com.baomidou.dynamic.datasource.annotation.DS;
+#end
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+#if($!{queryFieldList} && $queryFieldList.size() > 0)
+import com.xjrsoft.core.tool.utils.StringUtil;
+#end
+#set($voPackage=$package.Entity.replace("entity","vo"))
+#set($dtoPackage=$package.Entity.replace("entity","dto"))
+#set($mapperPackage=$package.Entity.replace("entity","mapper"))
+import $!{package.Entity}.$!{entity};
+#if(($!{subTableList} && $subTableList.size() > 0) || $!{isWorkflowForm} )
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
+#end
+#foreach($subTable in $!{subTableList})
+import $!{package.Entity}.$!{subTable.entityName};
+import $!{mapperPackage}.$!{subTable.entityName}Mapper;
+#end
+import $!{dtoPackage}.$!{entity}ListDto;
+#if($!{isPage})
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.xjrsoft.common.page.ConventPage;
+import com.xjrsoft.common.page.PageOutput;
+#else
+import $!{package.Entity}.$!{entity};
+#end
+#if(!$!{isPage} || ($!{subTableList} && $subTableList.size() > 0))
+import java.util.List;
+#end
+import $!{package.Mapper}.$!{table.mapperName};
+import $!{package.Service}.$!{table.serviceName};
+import $!{superServiceImplClassPackage};
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+
+/**
+ * $!{table.comment} 服务实现类
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+@Service
+@AllArgsConstructor
+#if($!{kotlin})
+open class $!{table.serviceImplName} : $!{superServiceImplClass}<$!{table.mapperName}, $!{entity}>(), $!{table.serviceName} {
+
+}
+#else
+#if(!$dbLinkId.equals("localDB"))
+@DS("$!{dbLinkId}")
+#end
+public class $!{table.serviceImplName} extends $!{superServiceImplClass}<$!{table.mapperName}, $!{entity}> implements $!{table.serviceName} {
+
+#foreach($subTable in $!{subTableList})
+	private $!{subTable.entityName}Mapper $!{subTable.entityPath}Mapper;
+#end
+
+#if(!$!{isPage})
+	@Override
+	public List<$!{entity}> getList($!{entity}ListDto listDto) {
+		Wrapper<$!{entity}> wrapper = Wrappers.<$!{entity}>query().lambda()#if($!{queryFieldList} && $!queryFieldList.size() == 0);#end
+#set($indexCount = 0)
+#if($!{isTree})
+#set($indexCount = $indexCount - 1)
+#foreach($queryField in $!{queryFieldList})
+#if($queryField.fieldName.equals($!{treeForm.treefieldRe}))
+#set($indexCount = $indexCount + 1)
+#end
+#end
+#end
+#foreach($field in $!{table.fields})
+#set($capitalName = $field.propertyName.substring(0, 1).toUpperCase() + $field.propertyName.substring(1))
+#set($fieldUperName = $field.name.substring(0, 1).toUpperCase() + $field.name.substring(1))
+#if($!{isTree} && $field.name.equals($!{treeForm.treefieldRe}))
+#set($fieldUperName = $treeForm.treefieldId.substring(0, 1).toUpperCase() + $treeForm.treefieldId.substring(1))
+#set($indexCount = $indexCount + 1)
+#if($indexCount == $!{queryFieldList.size()})
+				.eq(!StringUtil.isEmpty(listDto.get$!{fieldUperName}()), $!{entity}::get$!{capitalName}, listDto.get$!{fieldUperName}());
+#else
+				.eq(!StringUtil.isEmpty(listDto.get$!{fieldUperName}()), $!{entity}::get$!{capitalName}, listDto.get$!{fieldUperName}())
+#end
+#else
+#foreach($queryField in $!{queryFieldList})
+#set($fieldUperName = $field.name.substring(0, 1).toUpperCase() + $field.name.substring(1))
+#if($!{field.name.equals($queryField.fieldName)})
+#set($indexCount = $indexCount + 1)
+#if($!{queryField.queryType.equals("equal")})
+#if($indexCount == $!{queryFieldList.size()})
+				.eq(!StringUtil.isEmpty(listDto.get$!{fieldUperName}()), $!{entity}::get$!{capitalName}, listDto.get$!{fieldUperName}());
+#else
+				.eq(!StringUtil.isEmpty(listDto.get$!{fieldUperName}()), $!{entity}::get$!{capitalName}, listDto.get$!{fieldUperName}())
+#end
+#elseif($!{queryField.queryType.equals("like")})
+#if($indexCount == $!{queryFieldList.size()})
+				.like(!StringUtil.isEmpty(listDto.get$!{fieldUperName}()), $!{entity}::get$!{capitalName}, listDto.get$!{fieldUperName}());
+#else
+				.like(!StringUtil.isEmpty(listDto.get$!{fieldUperName}()), $!{entity}::get$!{capitalName}, listDto.get$!{fieldUperName}())
+#end
+#elseif($!{queryField.queryType.equals("date")})
+#if($indexCount == $!{queryFieldList.size()})
+				.ge(!StringUtil.isEmpty(listDto.get$!{fieldUperName}_Start()), $!{entity}::get$!{capitalName}, listDto.get$!{fieldUperName}_Start())
+				.le(!StringUtil.isEmpty(listDto.get$!{fieldUperName}_End()), $!{entity}::get$!{capitalName}, listDto.get$!{fieldUperName}_End());
+#else
+				.ge(!StringUtil.isEmpty(listDto.get$!{fieldUperName}_Start()), $!{entity}::get$!{capitalName}, listDto.get$!{fieldUperName}_Start())
+				.le(!StringUtil.isEmpty(listDto.get$!{fieldUperName}_End()), $!{entity}::get$!{capitalName}, listDto.get$!{fieldUperName}_End())
+#end
+#end
+#end
+#end
+#end
+#end
+		return this.list(wrapper);
+	}
+
+#else
+	@Override
+	public IPage<$!{entity}> getPageList($!{entity}ListDto pageListDto) {
+		Wrapper<$!{entity}> wrapper = Wrappers.<$!{entity}>query().lambda()#if($!{queryFieldList} && $!queryFieldList.size() == 0);
+		#end
+#set($indexCount = 0)
+#if($!{isTree})
+#set($indexCount = $indexCount - 1)
+#foreach($queryField in $!{queryFieldList})
+#if($queryField.fieldName.equals($!{treeForm.treefieldRe}))
+#set($indexCount = $indexCount + 1)
+#end
+#end
+#end
+#foreach($field in $!{table.fields})
+#set($capitalName = $field.propertyName.substring(0, 1).toUpperCase() + $field.propertyName.substring(1))
+#if($!{isTree} && $field.name.equals($!{treeForm.treefieldRe}))
+#set($fieldUperName = $treeForm.treefieldId.substring(0, 1).toUpperCase() + $treeForm.treefieldId.substring(1))
+#set($indexCount = $indexCount + 1)
+#if($indexCount == $!{queryFieldList.size()})
+				.eq(!StringUtil.isEmpty(pageListDto.get$!{fieldUperName}()), $!{entity}::get$!{capitalName}, pageListDto.get$!{fieldUperName}());
+#else
+				.eq(!StringUtil.isEmpty(pageListDto.get$!{fieldUperName}()), $!{entity}::get$!{capitalName}, pageListDto.get$!{fieldUperName}())
+#end
+#else
+#foreach($queryField in $!{queryFieldList})
+#set($fieldUperName = $field.name.substring(0, 1).toUpperCase() + $field.name.substring(1))
+#if($!{field.name.equals($queryField.fieldName)})
+#set($indexCount = $indexCount + 1)
+#if($!{queryField.queryType.equals("equal")})
+#if($indexCount == $!{queryFieldList.size()})
+				.eq(!StringUtil.isEmpty(pageListDto.get$!{fieldUperName}()), $!{entity}::get$!{capitalName}, pageListDto.get$!{fieldUperName}());
+#else
+				.eq(!StringUtil.isEmpty(pageListDto.get$!{fieldUperName}()), $!{entity}::get$!{capitalName}, pageListDto.get$!{fieldUperName}())
+#end
+#elseif($!{queryField.queryType.equals("like")})
+#if($indexCount == $!{queryFieldList.size()})
+				.like(!StringUtil.isEmpty(pageListDto.get$!{fieldUperName}()), $!{entity}::get$!{capitalName}, pageListDto.get$!{fieldUperName}());
+#else
+				.like(!StringUtil.isEmpty(pageListDto.get$!{fieldUperName}()), $!{entity}::get$!{capitalName}, pageListDto.get$!{fieldUperName}())
+#end
+#elseif($!{queryField.queryType.equals("date")})
+#if($indexCount == $!{queryFieldList.size()})
+				.ge(!StringUtil.isEmpty(pageListDto.get$!{fieldUperName}_Start()), $!{entity}::get$!{capitalName}, pageListDto.get$!{fieldUperName}_Start())
+				.le(!StringUtil.isEmpty(pageListDto.get$!{fieldUperName}_End()), $!{entity}::get$!{capitalName}, pageListDto.get$!{fieldUperName}_End());
+#else
+				.ge(!StringUtil.isEmpty(pageListDto.get$!{fieldUperName}_Start()), $!{entity}::get$!{capitalName}, pageListDto.get$!{fieldUperName}_Start())
+				.le(!StringUtil.isEmpty(pageListDto.get$!{fieldUperName}_End()), $!{entity}::get$!{capitalName}, pageListDto.get$!{fieldUperName}_End())
+#end
+#end
+#end
+#end
+#end
+#end
+		return this.page(ConventPage.getPage(pageListDto), wrapper);
+	}
+#end
+
+#foreach($tableCfg in $tableList)
+#if($tableCfg.name.equals($table.name))
+#foreach($!{field} in $!{table.fields})
+#if($tableCfg.pk.equals($field.name))
+#set($mainKeyCapitalName = $field.propertyName.substring(0, 1).toUpperCase() + $field.propertyName.substring(1))
+#end
+#end
+#end
+#end
+	@Override
+#if($!{isWorkflowForm})
+	public String add$!{entity}($!{entity} $!{table.entityPath}#foreach($subTable in $!{subTableList}), List<$!{subTable.entityName}> $!{subTable.entityPath}List#end) {
+#else
+	public boolean add$!{entity}($!{entity} $!{table.entityPath}#foreach($subTable in $!{subTableList}), List<$!{subTable.entityName}> $!{subTable.entityPath}List#end) {
+#end
+#if(($!{subTableList} && $subTableList.size() > 0) || $!{isWorkflowForm} )
+		String $!{table.entityPath}Id = IdWorker.get32UUID();
+		$!{table.entityPath}.set$!{mainKeyCapitalName}($!{table.entityPath}Id);
+#end
+#foreach($subTable in $!{subTableList})
+#foreach($tableT in $!{tableList})
+#if($subTable.name.equals($tableT.name))
+#foreach($field in $subTable.fields)
+#if($field.name.equals($tableT.field))
+#set($fkCapitalName = $field.propertyName.substring(0, 1).toUpperCase() + $field.propertyName.substring(1))
+		$!{subTable.entityPath}List.forEach($!{subTable.entityPath} -> $!{subTable.entityPath}.set$!{fkCapitalName}($!{table.entityPath}Id));
+#end
+#end
+#end
+#end
+		this.saveBatch($!{subTable.entityPath}List, $!{subTable.entityName}.class, $!{subTable.entityName}Mapper.class);
+#end
+		boolean isSuccess = this.save($!{table.entityPath});
+#if($!{isWorkflowForm})
+		return isSuccess ? $!{table.entityPath}Id : null;
+#else
+		return isSuccess;
+#end
+	}
+
+	@Override
+	public boolean update$!{entity}(String id, $!{entity} $!{table.entityPath}#foreach($subTable in $!{subTableList}), List<$!{subTable.entityName}> $!{subTable.entityPath}List#end) {
+		$!{table.entityPath}.set$!{mainKeyCapitalName}(id);
+#foreach($subTable in $!{subTableList})
+#foreach($tableT in $!{tableList})
+#if($subTable.name.equals($tableT.name))
+#foreach($field in $subTable.fields)
+#if($field.name.equals($tableT.field))
+#set($fkCapitalName = $field.propertyName.substring(0, 1).toUpperCase() + $field.propertyName.substring(1))
+		$!{subTable.entityPath}List.forEach($!{subTable.entityPath} -> $!{subTable.entityPath}.set$!{fkCapitalName}(id));
+		$!{subTable.entityPath}Mapper.delete(Wrappers.<$!{subTable.entityName}>query().lambda().eq($!{subTable.entityName}::get$!{fkCapitalName}, id));
+#end
+#end
+#end
+#end
+		this.saveBatch($!{subTable.entityPath}List, $!{subTable.entityName}.class, $!{subTable.entityName}Mapper.class);
+#end
+		return this.updateById($!{table.entityPath});
+	}
+
+#foreach($subTable in $!{subTableList})
+#foreach($tableT in $!{tableList})
+#if($subTable.name.equals($tableT.name))
+#foreach($field in $subTable.fields)
+#if($field.name.equals($tableT.field))
+#set($fkCapitalName = $field.propertyName.substring(0, 1).toUpperCase() + $field.propertyName.substring(1))
+	public List<$!{subTable.entityName}> get$!{subTable.entityName}ByParentId(String parentId){
+		Wrapper wrapper = Wrappers.<$!{subTable.entityName}>query().lambda().eq($!{subTable.entityName}::get$!{fkCapitalName}, parentId);
+		return $!{subTable.entityPath}Mapper.selectList(wrapper);
+	}
+#end
+#end
+#end
+#end
+#end
+}
+#end

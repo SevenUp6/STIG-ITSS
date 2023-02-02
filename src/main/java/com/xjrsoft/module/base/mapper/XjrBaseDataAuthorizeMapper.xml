@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjrsoft.module.base.mapper.XjrBaseDataAuthorizeMapper">
+
+    <resultMap id="dataAuthResultMap" type="com.xjrsoft.module.base.entity.XjrBaseDataAuthorize">
+        <id column="F_Id" jdbcType="VARCHAR" property="id"/>
+        <result column="F_ModuleId" jdbcType="VARCHAR" property="moduleId" />
+        <result column="F_ObjectId" jdbcType="VARCHAR" property="objectId" />
+        <result column="F_ObjectType" jdbcType="INTEGER" property="objectType" />
+        <result column="F_EnabledMark" jdbcType="INTEGER" property="enabledMark" />
+        <result column="F_EnabledChildrenMark" jdbcType="INTEGER" property="enabledChildrenMark" />
+        <result column="F_DataSettingType" jdbcType="INTEGER" property="dataSettingType" />
+        <result column="F_CreateDate" jdbcType="DATE" property="createDate" />
+        <result column="F_CreateUserId" jdbcType="VARCHAR" property="createUserId" />
+        <result column="F_CreateUserName" jdbcType="VARCHAR" property="createUserName" />
+    </resultMap>
+
+    <select id="getDataAuthOfUserByUrl" resultMap = "dataAuthResultMap">
+        select
+            da.*
+        from
+            xjr_base_dataauthorize da
+        left join xjr_base_module m on
+            da.F_ModuleId = m.F_ModuleId
+        where
+            m.F_UrlAddress = #{url}
+            and (
+            <if test="roleIdList != null and roleIdList.size() > 0">
+                (da.F_ObjectId in
+                    <foreach collection="roleIdList" item="roleId" open="(" close=")" separator=",">
+                        #{roleId}
+                    </foreach>
+                and da.F_ObjectType = 1) or
+            </if>
+            (da.F_ObjectId = #{userId}
+            and da.F_ObjectType = 2))
+    </select>
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjrsoft.module.itss.machineModule.mapper.FaultTypeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="faultTypeResultMap" type="com.xjrsoft.module.itss.machineModule.entity.FaultType">
+        <id column="id" property="id"/>
+        <result column="fau_name" property="fauName"/>
+        <result column="mod_id" property="modId"/>
+        <result column="mod_name" property="modName"/>
+        <result column="type_id" property="typeId"/>
+        <result column="type_name" property="typeName"/>
+        <result column="remark" property="remark"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="updated_by" property="updatedBy"/>
+        <result column="updated_time" property="updatedTime"/>
+    </resultMap>
+
+
+
+</mapper>
