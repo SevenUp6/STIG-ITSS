@@ -118,7 +118,7 @@ public class DingTalkGetAllUser {
             for (String subtractId : subtractIds2) {
                 XjrBaseUser baseUser = new XjrBaseUser();
                 OapiV2UserListResponse.ListUserResponse userResponse = userResponsesMap.get(subtractId);
-                baseUser.setAccount(userResponse.getMobile()).setPassword(DigestUtil.encrypt("000000")).setRealName(userResponse.getName()).setHeadIcon(userResponse.getAvatar()).setEnCode(userResponse.getJobNumber()).setEmail(userResponse.getEmail()).setMobile(userResponse.getMobile())
+                baseUser.setAccount(userResponse.getJobNumber()).setPassword(DigestUtil.encrypt("000000")).setRealName(userResponse.getName()).setHeadIcon(userResponse.getAvatar()).setEnCode(userResponse.getJobNumber()).setEmail(userResponse.getEmail()).setMobile(userResponse.getMobile())
                         .setEnabledMark(EnabledMarkEnum.ENABLED.getCode()).setDeleteMark(DeleteMarkEnum.NODELETE.getCode()).setCreateDate(LocalDateTimeUtil.now()).setDingTalkId(userResponse.getUserid());;
                 iXjrBaseUserService.save(baseUser);
                 XjrBaseUserRelation xjrBaseUserRelation = new XjrBaseUserRelation();
