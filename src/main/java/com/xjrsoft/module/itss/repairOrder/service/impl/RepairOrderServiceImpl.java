@@ -1,21 +1,26 @@
 package com.xjrsoft.module.itss.repairOrder.service.impl;
+
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.xjrsoft.core.tool.utils.StringUtil;
-import com.xjrsoft.module.base.entity.XjrBaseModule;
-import com.xjrsoft.module.itss.repairOrder.dto.RepairOrderDto;
-import com.xjrsoft.module.itss.repairOrder.entity.RepairOrder;
-import com.xjrsoft.module.itss.repairOrder.dto.RepairOrderListDto;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.xjrsoft.common.page.ConventPage;
+import com.xjrsoft.core.mp.base.BaseService;
+import com.xjrsoft.core.secure.utils.SecureUtil;
+import com.xjrsoft.core.tool.utils.StringUtil;
+import com.xjrsoft.module.base.entity.XjrBaseRole;
+import com.xjrsoft.module.base.service.IXjrBaseRoleService;
+import com.xjrsoft.module.itss.repairOrder.dto.RepairOrderDto;
+import com.xjrsoft.module.itss.repairOrder.dto.RepairOrderListDto;
+import com.xjrsoft.module.itss.repairOrder.entity.RepairOrder;
 import com.xjrsoft.module.itss.repairOrder.mapper.RepairOrderMapper;
 import com.xjrsoft.module.itss.repairOrder.service.IRepairOrderService;
-import com.xjrsoft.core.mp.base.BaseService;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
+import java.util.List;
+
 
 /**
  * 维修工单表 服务实现类
@@ -27,26 +32,49 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class RepairOrderServiceImpl extends BaseService<RepairOrderMapper, RepairOrder> implements IRepairOrderService {
 
+	private  IXjrBaseRoleService roleService;
 
 	@Override
 	public IPage<RepairOrder> getPageList(RepairOrderListDto pageListDto) {
-		Wrapper<RepairOrder> wrapper = Wrappers.<RepairOrder>query().lambda()				.eq(!StringUtil.isEmpty(pageListDto.getIsurgent()), RepairOrder::getIsurgent, pageListDto.getIsurgent())
-				.eq(!StringUtil.isEmpty(pageListDto.getCode()), RepairOrder::getCode, pageListDto.getCode())
-				.eq(!StringUtil.isEmpty(pageListDto.getStatus()), RepairOrder::getStatus, pageListDto.getStatus())
-				.like(!StringUtil.isEmpty(pageListDto.getReport_name()), RepairOrder::getReportName, pageListDto.getReport_name())
-				.like(!StringUtil.isEmpty(pageListDto.getReport_phone()), RepairOrder::getReportPhone, pageListDto.getReport_phone())
-				.like(!StringUtil.isEmpty(pageListDto.getCreated_time()), RepairOrder::getCreatedTime, pageListDto.getCreated_time())
-				.like(!StringUtil.isEmpty(pageListDto.getRepair_usrname()), RepairOrder::getRepairUsrname, pageListDto.getRepair_usrname())
-				.ge(!StringUtil.isEmpty(pageListDto.getAssign_time_Start()), RepairOrder::getAssignTime, pageListDto.getAssign_time_Start())
-				.le(!StringUtil.isEmpty(pageListDto.getAssign_time_End()), RepairOrder::getAssignTime, pageListDto.getAssign_time_End())
-				.like(!StringUtil.isEmpty(pageListDto.getRepair_time()), RepairOrder::getRepairTime, pageListDto.getRepair_time())
-				.like(!StringUtil.isEmpty(pageListDto.getType_name()), RepairOrder::getTypeName, pageListDto.getType_name())
-				.like(!StringUtil.isEmpty(pageListDto.getMod_name()), RepairOrder::getModName, pageListDto.getMod_name())
-				.like(!StringUtil.isEmpty(pageListDto.getFau_name()), RepairOrder::getFauName, pageListDto.getFau_name())
-				.eq(!StringUtil.isEmpty(pageListDto.getHandle_type()), RepairOrder::getHandleType, pageListDto.getHandle_type())
-				.and(w->w.eq(!StringUtil.isEmpty(pageListDto.getCreated_by()), RepairOrder::getCreatedBy, pageListDto.getCreated_by())
-				.or().eq(!StringUtil.isEmpty(pageListDto.getRepair_usrid()), RepairOrder::getRepairUsrid, pageListDto.getRepair_usrid())
-						.apply("1=1")		).eq(!StringUtil.isEmpty(pageListDto.getReason()), RepairOrder::getReason, pageListDto.getReason()).orderByDesc(RepairOrder::getIsurgent,RepairOrder::getAssignTime);
+		Wrapper<RepairOrder> wrapper;
+		Boolean isAdminRole=isAdminRole(pageListDto.getCreated_by());
+		if(isAdminRole){
+			wrapper = Wrappers.<RepairOrder>query().lambda().eq(!StringUtil.isEmpty(pageListDto.getIsurgent()), RepairOrder::getIsurgent, pageListDto.getIsurgent())
+					.eq(!StringUtil.isEmpty(pageListDto.getCode()), RepairOrder::getCode, pageListDto.getCode())
+					.eq(!StringUtil.isEmpty(pageListDto.getStatus()), RepairOrder::getStatus, pageListDto.getStatus())
+					.like(!StringUtil.isEmpty(pageListDto.getReport_name()), RepairOrder::getReportName, pageListDto.getReport_name())
+					.like(!StringUtil.isEmpty(pageListDto.getReport_phone()), RepairOrder::getReportPhone, pageListDto.getReport_phone())
+					.like(!StringUtil.isEmpty(pageListDto.getCreated_time()), RepairOrder::getCreatedTime, pageListDto.getCreated_time())
+					.like(!StringUtil.isEmpty(pageListDto.getRepair_usrname()), RepairOrder::getRepairUsrname, pageListDto.getRepair_usrname())
+					.ge(!StringUtil.isEmpty(pageListDto.getAssign_time_Start()), RepairOrder::getAssignTime, pageListDto.getAssign_time_Start())
+					.le(!StringUtil.isEmpty(pageListDto.getAssign_time_End()), RepairOrder::getAssignTime, pageListDto.getAssign_time_End())
+					.like(!StringUtil.isEmpty(pageListDto.getRepair_time()), RepairOrder::getRepairTime, pageListDto.getRepair_time())
+					.like(!StringUtil.isEmpty(pageListDto.getType_name()), RepairOrder::getTypeName, pageListDto.getType_name())
+					.like(!StringUtil.isEmpty(pageListDto.getMod_name()), RepairOrder::getModName, pageListDto.getMod_name())
+					.like(!StringUtil.isEmpty(pageListDto.getFau_name()), RepairOrder::getFauName, pageListDto.getFau_name())
+					.eq(!StringUtil.isEmpty(pageListDto.getHandle_type()), RepairOrder::getHandleType, pageListDto.getHandle_type())
+					.eq(!StringUtil.isEmpty(pageListDto.getReason()), RepairOrder::getReason, pageListDto.getReason()).orderByAsc(RepairOrder::getStatus).orderByDesc(RepairOrder::getIsurgent,RepairOrder::getAssignTime);
+
+		}else{
+			wrapper = Wrappers.<RepairOrder>query().lambda().eq(!StringUtil.isEmpty(pageListDto.getIsurgent()), RepairOrder::getIsurgent, pageListDto.getIsurgent())
+					.eq(!StringUtil.isEmpty(pageListDto.getCode()), RepairOrder::getCode, pageListDto.getCode())
+					.eq(!StringUtil.isEmpty(pageListDto.getStatus()), RepairOrder::getStatus, pageListDto.getStatus())
+					.like(!StringUtil.isEmpty(pageListDto.getReport_name()), RepairOrder::getReportName, pageListDto.getReport_name())
+					.like(!StringUtil.isEmpty(pageListDto.getReport_phone()), RepairOrder::getReportPhone, pageListDto.getReport_phone())
+					.like(!StringUtil.isEmpty(pageListDto.getCreated_time()), RepairOrder::getCreatedTime, pageListDto.getCreated_time())
+					.like(!StringUtil.isEmpty(pageListDto.getRepair_usrname()), RepairOrder::getRepairUsrname, pageListDto.getRepair_usrname())
+					.ge(!StringUtil.isEmpty(pageListDto.getAssign_time_Start()), RepairOrder::getAssignTime, pageListDto.getAssign_time_Start())
+					.le(!StringUtil.isEmpty(pageListDto.getAssign_time_End()), RepairOrder::getAssignTime, pageListDto.getAssign_time_End())
+					.like(!StringUtil.isEmpty(pageListDto.getRepair_time()), RepairOrder::getRepairTime, pageListDto.getRepair_time())
+					.like(!StringUtil.isEmpty(pageListDto.getType_name()), RepairOrder::getTypeName, pageListDto.getType_name())
+					.like(!StringUtil.isEmpty(pageListDto.getMod_name()), RepairOrder::getModName, pageListDto.getMod_name())
+					.like(!StringUtil.isEmpty(pageListDto.getFau_name()), RepairOrder::getFauName, pageListDto.getFau_name())
+					.eq(!StringUtil.isEmpty(pageListDto.getHandle_type()), RepairOrder::getHandleType, pageListDto.getHandle_type())
+					.and(w->w.eq(!StringUtil.isEmpty(pageListDto.getCreated_by()), RepairOrder::getCreatedBy, pageListDto.getCreated_by())
+							.or().eq(!StringUtil.isEmpty(pageListDto.getRepair_usrid()), RepairOrder::getRepairUsrid, pageListDto.getRepair_usrid())
+							.apply("1=1")		).eq(!StringUtil.isEmpty(pageListDto.getReason()), RepairOrder::getReason, pageListDto.getReason()).orderByAsc(RepairOrder::getStatus).orderByDesc(RepairOrder::getIsurgent,RepairOrder::getAssignTime);
+
+		}
 		return this.page(ConventPage.getPage(pageListDto), wrapper);
 	}
 
@@ -115,4 +143,19 @@ public class RepairOrderServiceImpl extends BaseService<RepairOrderMapper, Repai
 		return this.update(updateWrapper);
 	}
 
+
+	public  Boolean isAdminRole(String userId){
+		boolean isAdminRole = false;
+		String currentUserId = SecureUtil.getUserId();
+		XjrBaseRole sysRole = roleService.getSysRole();
+		List<XjrBaseRole> rolesOfUserId = roleService.getRolesByUserId(currentUserId);
+		// 判断权限
+		for (XjrBaseRole xjrBaseRole : rolesOfUserId) {
+			if (StringUtils.equals(xjrBaseRole.getRoleId(), sysRole.getRoleId())) {
+				isAdminRole = true;
+				break;
+			}
+		}
+		return isAdminRole;
+	}
 }
