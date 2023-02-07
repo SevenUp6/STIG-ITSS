@@ -71,13 +71,13 @@ public class MachineCompanyController {
 		MachineCompany machineCompany = BeanUtil.copy(machineCompanyDto, MachineCompany.class);
 		List companylist=machineCompanyService.getListByName(machineCompany.getComName());
 		if(null !=companylist && companylist.size()>0){
-			return Response.notOk(1002,"保存失败，已存在相同的公司名称【"+"】");
+			return Response.notOk(1002,"保存失败，已存在相同的公司名称【"+machineCompany.getComName()+"】");
 		}
 		String comcode=machineCompany.getComCode();
 		String  maxComCode;
-		MachineCompany maxCompany		= machineCompanyService.getMaxComCodeByPid(machineCompany.getId());
+		MachineCompany maxCompany = machineCompanyService.getMaxComCodeByPid(machineCompany.getId());//(machineCompany.getId()是pid
 		if(null==maxCompany){
-			maxComCode=comcode+"001";
+			maxComCode=machineCompany.getPcode()+"001";
 			machineCompany.setComCode(maxComCode);
 		}else{
 			maxComCode=maxCompany.getComCode();

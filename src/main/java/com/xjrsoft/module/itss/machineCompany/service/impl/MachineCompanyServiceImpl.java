@@ -67,8 +67,11 @@ public class MachineCompanyServiceImpl extends BaseService<MachineCompanyMapper,
 	}
 	@Override
 	public List getListByName(String name){
-		Wrapper<MachineCompany> wrapper = Wrappers.<MachineCompany>query().lambda()				.like(!StringUtil.isEmpty(name), MachineCompany::getComName, name);
+		Wrapper<MachineCompany> wrapper = Wrappers.<MachineCompany>query().lambda().eq(!StringUtil.isEmpty(name), MachineCompany::getComName, name);
 		return this.list( wrapper);
 	}
 
 }
+
+
+
