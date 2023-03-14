@@ -51,6 +51,7 @@ public class LoginController {
 	public Response<LoginSuccessVo> login(@RequestBody LoginInfoDto loginInfoDto) {
 		String enCode = loginInfoDto.getAccount();
 //		String account = loginInfoDto.getAccount();
+
 		XjrBaseUser user_no=userService.getUserByEnCode(enCode);
 		if (user_no == null) {
 			return Response.notOk("帐号密码错误！");

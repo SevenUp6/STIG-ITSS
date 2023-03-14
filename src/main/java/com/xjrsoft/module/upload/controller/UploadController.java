@@ -3,8 +3,8 @@ package com.xjrsoft.module.upload.controller;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.xjrsoft.common.result.Response;
 import com.xjrsoft.core.tool.utils.DateUtil;
-import com.xjrsoft.core.tool.utils.Func;
 import com.xjrsoft.core.tool.utils.IoUtil;
+import com.xjrsoft.core.tool.utils.PicUtils;
 import com.xjrsoft.core.tool.utils.StringPool;
 import com.xjrsoft.module.base.entity.XjrBaseAnnexesFile;
 import com.xjrsoft.module.base.service.IXjrBaseAnnexesFileService;
@@ -16,18 +16,18 @@ import com.xjrsoft.module.upload.vo.UploadFileVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
 
 /**
  * <p>
@@ -161,9 +161,26 @@ public Response<UploadFileVo> uploadFiles(@RequestParam(value = "file", required
         if (!fileDir.exists()){
             fileDir.mkdirs();
         }
-        File uploadFile = IoUtil.toFile(multipartFile);
-        String filePath = fileDirPath + File.separator + IdWorker.get32UUID() + StringPool.DOT + suffix;
-        File file = new File(path + filePath);
+        File uploadFile;
+        String filePath;
+        File file = null;
+        if("bmp,jpg,jpeg,png".contains(suffix)){
+            //压缩图片到指定120K以内,不管你的图片有多少兆,都不会超过120kb,精度还算可以,不会模糊
+            byte[] bytes = PicUtils.compressPicForScale(multipartFile.getBytes(), 120);
+            //生成保存在服务器的图片名称，统一修改原后缀名为:jpg
+            filePath = fileDirPath + File.separator + IdWorker.get32UUID() + StringPool.DOT + "jpg";
+            uploadFile = new File(path + filePath);
+            FileOutputStream fileOutputStream = new FileOutputStream(uploadFile);
+            fileOutputStream.write(bytes);
+            fileOutputStream.close();
+            file = new File(path + filePath);
+        }else {
+            uploadFile = IoUtil.toFile(multipartFile);
+            filePath = fileDirPath + File.separator + IdWorker.get32UUID() + StringPool.DOT + suffix;
+            file = new File(path + filePath);
+
+        }
+
         boolean isSuccess = uploadFile.renameTo(file);
         if (isSuccess) {
             // 保存数据库记录
