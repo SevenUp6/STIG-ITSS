@@ -6,7 +6,7 @@
         select r.type_id , r.type_name,count(r.mod_id) count,r.mod_name  from repair_order r
 
         <where>
-            status=9
+            status=9 and repair_usrid!='software'
             <if test="type_id != null and type_id != ''">
                 and type_id = #{type_id}
             </if>
@@ -24,7 +24,7 @@
         select r.type_id , r.type_name,count(r.fau_id) count,r.mod_id,r.mod_name,
            r.fau_name      from repair_order r
         <where>
-            status=9
+            status=9 and repair_usrid!='software'
             <if test="type_id != null and type_id != ''">
                 and type_id = #{type_id}
             </if>
@@ -45,7 +45,7 @@
         select m.repair_usrname,sum(m.count) count,sum(m.count2) count2 from (
         SELECT r.repair_usrname, count(r.id) count,''count2  FROM repair_order r
         <where>
-            status = 9
+            status = 9 and repair_usrid!='software'
             <if test="type_id != null and type_id != ''">
                 and type_id = #{type_id}
             </if>
@@ -57,7 +57,7 @@
         union
         SELECT r.repair_usrname, ''count,count(r.id) count2  FROM repair_order r
         <where>
-            status =0
+            status =0 and repair_usrid!='software'
             <if test="type_id != null and type_id != ''">
                 and type_id = #{type_id}
             </if>
@@ -76,7 +76,7 @@
         sum(timestampdiff(MINUTE,r.assign_time,r.repair_time)/60) hours
         from repair_order r
         <where>
-            status=9
+            status=9 and repair_usrid!='software'
             <if test="type_id != null and type_id != ''">
                 and type_id = #{type_id}
             </if>
@@ -92,11 +92,11 @@
         select  type_name,sum(count9)sum9,sum(count0)sum0,sum(count0+count9) sum
         from(
             select type_name,count(id)count9,''count0 from repair_order r
-            where status=9 and CONVERT( created_time, date) =date_sub(curdate(),interval 1 day)
+            where status=9 and repair_usrid!='software' and CONVERT( created_time, date) =date_sub(curdate(),interval 1 day)
             GROUP BY type_name
             union
             select type_name,''count9,count(id)count0 from repair_order r
-            where status =0 and CONVERT( created_time, date) =date_sub(curdate(),interval 1 day)
+            where status =0 and repair_usrid!='software' and CONVERT( created_time, date) =date_sub(curdate(),interval 1 day)
             GROUP BY type_name
             ) m
         GROUP BY m.type_name
@@ -107,7 +107,7 @@
         sum(timestampdiff(MINUTE,r.assign_time,r.repair_time)/60) hours
         from repair_order r
         <where>
-            status=9
+            status=9 and repair_usrid!='software'
             <if test="type_id != null and type_id != ''">
                 and type_id = #{type_id}
             </if>

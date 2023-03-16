@@ -5,6 +5,7 @@ import com.xjrsoft.module.base.vo.AnnexesFileVo;
 import lombok.Data;
 import io.swagger.annotations.ApiModel;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -37,7 +38,7 @@ public class RepairOrderVo {
 	private String createdBy;
 
 	@JsonProperty("created_time")
-	private String createdTime;
+	private LocalDateTime createdTime;
 
 	@JsonProperty("repair_usrname")
 	private String repairUsrname;
@@ -46,10 +47,10 @@ public class RepairOrderVo {
 	private String repairPath;
 
 	@JsonProperty("assign_time")
-	private String assignTime;
+	private LocalDateTime assignTime;
 
 	@JsonProperty("repair_time")
-	private String repairTime;
+	private LocalDateTime repairTime;
 
 	@JsonProperty("type_name")
 	private String typeName;
@@ -82,6 +83,9 @@ public class RepairOrderVo {
 
 	@JsonProperty("mod_id")
 	private String modId;
+
+	@JsonProperty("remark")
+	private String remark;
 
 	@JsonProperty("fau_des")
 	private String fauDes;

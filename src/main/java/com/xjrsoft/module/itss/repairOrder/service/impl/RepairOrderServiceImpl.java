@@ -1,6 +1,7 @@
 package com.xjrsoft.module.itss.repairOrder.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -36,7 +37,7 @@ public class RepairOrderServiceImpl extends BaseService<RepairOrderMapper, Repai
 
 	@Override
 	public IPage<RepairOrder> getPageList(RepairOrderListDto pageListDto) {
-		Wrapper<RepairOrder> wrapper;
+		LambdaQueryWrapper  <RepairOrder> wrapper;
 		Boolean isAdminRole=isAdminRole(pageListDto.getCreated_by());
 		if(isAdminRole){
 			wrapper = Wrappers.<RepairOrder>query().lambda().eq(!StringUtil.isEmpty(pageListDto.getIsurgent()), RepairOrder::getIsurgent, pageListDto.getIsurgent())
@@ -53,8 +54,14 @@ public class RepairOrderServiceImpl extends BaseService<RepairOrderMapper, Repai
 					.like(!StringUtil.isEmpty(pageListDto.getMod_name()), RepairOrder::getModName, pageListDto.getMod_name())
 					.like(!StringUtil.isEmpty(pageListDto.getFau_name()), RepairOrder::getFauName, pageListDto.getFau_name())
 					.eq(!StringUtil.isEmpty(pageListDto.getHandle_type()), RepairOrder::getHandleType, pageListDto.getHandle_type())
-					.eq(!StringUtil.isEmpty(pageListDto.getReason()), RepairOrder::getReason, pageListDto.getReason()).orderByAsc(RepairOrder::getStatus).orderByDesc(RepairOrder::getIsurgent,RepairOrder::getAssignTime);
-
+					.eq(!StringUtil.isEmpty(pageListDto.getCom_name()), RepairOrder::getComName, pageListDto.getCom_name())
+					;
+			if("software"==pageListDto.getRepair_usrid() || "software".equals(pageListDto.getRepair_usrid())){
+				//软件类
+				wrapper.eq( RepairOrder::getRepairUsrid, pageListDto.getRepair_usrid());
+			}else {
+				wrapper.ne(RepairOrder::getRepairUsrid, "software").eq(!StringUtil.isEmpty(pageListDto.getReason()), RepairOrder::getReason, pageListDto.getReason()).orderByAsc(RepairOrder::getStatus).orderByDesc(RepairOrder::getIsurgent, RepairOrder::getAssignTime);
+			}
 		}else{
 			wrapper = Wrappers.<RepairOrder>query().lambda().eq(!StringUtil.isEmpty(pageListDto.getIsurgent()), RepairOrder::getIsurgent, pageListDto.getIsurgent())
 					.eq(!StringUtil.isEmpty(pageListDto.getCode()), RepairOrder::getCode, pageListDto.getCode())
@@ -70,9 +77,21 @@ public class RepairOrderServiceImpl extends BaseService<RepairOrderMapper, Repai
 					.like(!StringUtil.isEmpty(pageListDto.getMod_name()), RepairOrder::getModName, pageListDto.getMod_name())
 					.like(!StringUtil.isEmpty(pageListDto.getFau_name()), RepairOrder::getFauName, pageListDto.getFau_name())
 					.eq(!StringUtil.isEmpty(pageListDto.getHandle_type()), RepairOrder::getHandleType, pageListDto.getHandle_type())
-					.and(w->w.eq(!StringUtil.isEmpty(pageListDto.getCreated_by()), RepairOrder::getCreatedBy, pageListDto.getCreated_by())
-							.or().eq(!StringUtil.isEmpty(pageListDto.getRepair_usrid()), RepairOrder::getRepairUsrid, pageListDto.getRepair_usrid())
-							.apply("1=1")		).eq(!StringUtil.isEmpty(pageListDto.getReason()), RepairOrder::getReason, pageListDto.getReason()).orderByAsc(RepairOrder::getStatus).orderByDesc(RepairOrder::getIsurgent,RepairOrder::getAssignTime);
+					.eq(!StringUtil.isEmpty(pageListDto.getCom_name()), RepairOrder::getComName, pageListDto.getCom_name())
+					;
+			if("software"==pageListDto.getRepair_usrid() || "software".equals(pageListDto.getRepair_usrid())){
+				//软件类
+//				wrapper.eq( RepairOrder::getRepairUsrid, pageListDto.getRepair_usrid());
+				wrapper.and(w->w.eq(!StringUtil.isEmpty(pageListDto.getCreated_by()), RepairOrder::getCreatedBy, pageListDto.getCreated_by())
+						.eq(!StringUtil.isEmpty(pageListDto.getRepair_usrid()), RepairOrder::getRepairUsrid, pageListDto.getRepair_usrid())
+						.apply("1=1")		).eq(!StringUtil.isEmpty(pageListDto.getReason()), RepairOrder::getReason, pageListDto.getReason()).orderByAsc(RepairOrder::getStatus).orderByDesc(RepairOrder::getIsurgent,RepairOrder::getAssignTime);
+
+			}else{
+				wrapper.and(w->w.eq(!StringUtil.isEmpty(pageListDto.getCreated_by()), RepairOrder::getCreatedBy, pageListDto.getCreated_by())
+						.or().eq(!StringUtil.isEmpty(pageListDto.getRepair_usrid()), RepairOrder::getRepairUsrid, pageListDto.getRepair_usrid())
+						.apply("1=1")		).eq(!StringUtil.isEmpty(pageListDto.getReason()), RepairOrder::getReason, pageListDto.getReason()).orderByAsc(RepairOrder::getStatus).orderByDesc(RepairOrder::getIsurgent,RepairOrder::getAssignTime);
+			}
+
 
 		}
 		return this.page(ConventPage.getPage(pageListDto), wrapper);

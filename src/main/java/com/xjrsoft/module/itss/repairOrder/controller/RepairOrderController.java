@@ -62,12 +62,20 @@ public class RepairOrderController {
 	 */
 	@GetMapping("/{id}")
 	@ApiOperation(value = "详情", notes = "传入repairOrder")
-	public Response<RepairOrderVo> getFormData(@PathVariable String id) {
+	public Response<RepairOrderVo> getFormData(@PathVariable String id,@RequestParam( value="type", required=false) String type) {
 		// 主表数据
 		RepairOrder repairOrder = repairOrderService.getById(id);
-		List<AnnexesFileVo> report_file=xjrBaseAnnexesFileController.getfileUrlByFolderId(repairOrder.getId(),"0");
-		List<AnnexesFileVo> repair_file=xjrBaseAnnexesFileController.getfileUrlByFolderId(repairOrder.getId(),"9");
+		List<AnnexesFileVo> report_file;
+		List<AnnexesFileVo> repair_file = null;
+		if("software"==type || "software".equals(type)){
+			//软件类,只有一个附件
+			report_file=xjrBaseAnnexesFileController.getfileUrlByFolderId(repairOrder.getId(),"0");
+		}else{
+			report_file=xjrBaseAnnexesFileController.getfileUrlByFolderId(repairOrder.getId(),"0");
+			repair_file=xjrBaseAnnexesFileController.getfileUrlByFolderId(repairOrder.getId(),"9");
+		}
 		RepairOrderVo repairOrderVo=BeanUtil.copy(repairOrder, RepairOrderVo.class);
+
 		repairOrderVo.setReport_file(report_file);
 		repairOrderVo.setRepair_file(repair_file);
 		return Response.ok(repairOrderVo);
@@ -76,12 +84,16 @@ public class RepairOrderController {
 	/**
 	 * 自定义分页 维修工单表
 	 */
-	@GetMapping
+	@GetMapping()
 	@ApiOperation(value = "分页", notes = "传入repairOrder")
-	public Response<PageOutput<RepairOrderListVo>> getPageList(RepairOrderListDto listDto) {
+	public Response<PageOutput<RepairOrderListVo>> getPageList(@RequestParam( value="type", required=false) String type,RepairOrderListDto listDto) {
 		String userId = SecureUtil.getUserId();
 		listDto.setCreated_by(userId);
 		listDto.setRepair_usrid(userId);
+		if("software"==type || "software".equals(type)){
+			//软件,所有维修人员id和名称是“software”的都是软件类
+			listDto.setRepair_usrid("software");
+		}
 		IPage<RepairOrder> page = repairOrderService.getPageList(listDto);
 		List<RepairOrderListVo> records = BeanUtil.copyList(page.getRecords(), RepairOrderListVo.class);
 		// 转换列表数据
@@ -96,42 +108,72 @@ public class RepairOrderController {
 	 */
 	@PostMapping
 	@ApiOperation(value = "保存", notes = "传入repairOrder")
-	public Response save(@RequestBody SaveRepairOrderFormDataDto formDto) {
+	public Response save(@RequestBody SaveRepairOrderFormDataDto formDto,@RequestParam(value="type", required=false)String type) {
 		RepairOrderDto repairOrderDto = formDto.getRepairOrderDto();
 		String id=repairOrderDto.getId();
-		String code=repairOrderDto.getCode();
+		String code;
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		if(""==id||null==id){  //没有id是新增
-			id=IdWorker.get32UUID();
-			code=System.currentTimeMillis()+"";
-			repairOrderDto.setId(id);
-			repairOrderDto.setCode(code);
-			String userId = SecureUtil.getUserId();
-			repairOrderDto.setCreatedBy(userId);
-			repairOrderDto.setCreatedName(SecureUtil.getUserName());
-			repairOrderDto.setRepairUsrname(xjrBaseUserController.getUserInfo(repairOrderDto.getRepairUsrid()).get(0).getUserSimpleInfoVo().getRealName());
-			repairOrderDto.setCreatedTime(LocalDateTime.now());
-			repairOrderDto.setAssignTime(LocalDateTime.now());
-			RepairOrder repairOrder = BeanUtil.copy(repairOrderDto, RepairOrder.class);
-			boolean isSuccess = repairOrderService.addRepairOrder(repairOrder);
-			if(isSuccess){
-				XjrBaseUser user = userService.getById(repairOrderDto.getRepairUsrid());
-				//新增成功后发送钉钉消息
-				try {
-					DingTalkSendMsg.sendMsg(user.getDingTalkId(),repairOrderDto.getRepairUsrname());
-				} catch (Exception e) {
-					throw new RuntimeException(e);
+		if("software"==type || "software".equals(type)){
+			//软件
+			if(""==id||null==id){  //没有id是新增
+				id=IdWorker.get32UUID();
+				code=System.currentTimeMillis()+"";
+				repairOrderDto.setId(id);
+				repairOrderDto.setCode(code);
+				String userId = SecureUtil.getUserId();
+				repairOrderDto.setCreatedBy(userId);
+				repairOrderDto.setCreatedName(SecureUtil.getUserName());
+				repairOrderDto.setRepairUsrname("software");
+				repairOrderDto.setRepairUsrid("software");
+				repairOrderDto.setCreatedTime(LocalDateTime.now());
+				RepairOrder repairOrder = BeanUtil.copy(repairOrderDto, RepairOrder.class);
+				boolean isSuccess = repairOrderService.addRepairOrder(repairOrder);
+				if(isSuccess){
+					return 	Response.ok(0,id,"成功");
 				}
-				return 	Response.ok(0,id,"成功");
+				return Response.status(isSuccess);
+			}else{
+				String userId = SecureUtil.getUserId();
+				repairOrderDto.setUpdatedBy(userId);
+				repairOrderDto.setUpdatedTime(LocalDateTime.now());
+				RepairOrder repairOrder = BeanUtil.copy(repairOrderDto, RepairOrder.class);
+				return Response.status(repairOrderService.updateRepairOrder(id, repairOrder));
 			}
-			return Response.status(isSuccess);
 		}else{
-			String userId = SecureUtil.getUserId();
-			repairOrderDto.setUpdatedBy(userId);
-			repairOrderDto.setUpdatedTime(LocalDateTime.now());
-			RepairOrder repairOrder = BeanUtil.copy(repairOrderDto, RepairOrder.class);
-			return Response.status(repairOrderService.updateRepairOrder(id, repairOrder));
+			//硬件
+			if(""==id||null==id){  //没有id是新增
+				id=IdWorker.get32UUID();
+				code=System.currentTimeMillis()+"";
+				repairOrderDto.setId(id);
+				repairOrderDto.setCode(code);
+				String userId = SecureUtil.getUserId();
+				repairOrderDto.setCreatedBy(userId);
+				repairOrderDto.setCreatedName(SecureUtil.getUserName());
+				repairOrderDto.setRepairUsrname(xjrBaseUserController.getUserInfo(repairOrderDto.getRepairUsrid()).get(0).getUserSimpleInfoVo().getRealName());
+				repairOrderDto.setCreatedTime(LocalDateTime.now());
+				repairOrderDto.setAssignTime(LocalDateTime.now());
+				RepairOrder repairOrder = BeanUtil.copy(repairOrderDto, RepairOrder.class);
+				boolean isSuccess = repairOrderService.addRepairOrder(repairOrder);
+				if(isSuccess){
+					XjrBaseUser user = userService.getById(repairOrderDto.getRepairUsrid());
+					//新增成功后发送钉钉消息
+					try {
+						DingTalkSendMsg.sendMsg(user.getDingTalkId(),repairOrderDto.getRepairUsrname());
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+					return 	Response.ok(0,id,"成功");
+				}
+				return Response.status(isSuccess);
+			}else{
+				String userId = SecureUtil.getUserId();
+				repairOrderDto.setUpdatedBy(userId);
+				repairOrderDto.setUpdatedTime(LocalDateTime.now());
+				RepairOrder repairOrder = BeanUtil.copy(repairOrderDto, RepairOrder.class);
+				return Response.status(repairOrderService.updateRepairOrder(id, repairOrder));
+			}
 		}
+
 	}
 
 	/**

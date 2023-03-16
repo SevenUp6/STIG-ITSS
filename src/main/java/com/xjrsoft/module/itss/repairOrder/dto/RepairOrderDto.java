@@ -153,6 +153,11 @@ public class RepairOrderDto extends PageInput {
 	@JsonProperty("result_des")
 	private String resultDes;
 	/**
+	 * 备注
+	 */
+	@JsonProperty("remark")
+	private String remark;
+	/**
 	 * 处理方式（1维修，2更换）
 	 */
 	@JsonProperty("handle_type")

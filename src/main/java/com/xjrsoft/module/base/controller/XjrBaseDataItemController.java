@@ -12,10 +12,7 @@ import com.xjrsoft.module.base.entity.XjrBaseDataItem;
 import com.xjrsoft.module.base.entity.XjrBaseDataItemDetail;
 import com.xjrsoft.module.base.service.IXjrBaseDataItemDetailService;
 import com.xjrsoft.module.base.service.IXjrBaseDataItemService;
-import com.xjrsoft.module.base.vo.DataItemDetailTreeVo;
-import com.xjrsoft.module.base.vo.DataItemDetailVo;
-import com.xjrsoft.module.base.vo.DataItemTreeVo;
-import com.xjrsoft.module.base.vo.DataItemVo;
+import com.xjrsoft.module.base.vo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -127,5 +124,12 @@ public class XjrBaseDataItemController {
             isSuccess = itemService.removeByIds(Arrays.asList(idArray));
         }
         return Response.status(isSuccess);
+    }
+
+    @GetMapping("/{itemCode}/detail/select")
+    @ApiOperation(value="根据itemCode查询字典分类名称和编码")
+    public Response<List<DataItemDetailSelectVo>> getDataItemDetailByCode(@PathVariable String itemCode, @RequestParam(name = "模糊查询关键词", required = false) String keyword){
+        List<XjrBaseDataItemDetail> itemDetailList = itemDetailService.getDataItemDetailListByCode(itemCode, keyword);
+        return Response.ok(BeanUtil.copyList(itemDetailList, DataItemDetailSelectVo.class));
     }
 }

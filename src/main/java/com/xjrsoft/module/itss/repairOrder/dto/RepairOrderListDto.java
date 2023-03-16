@@ -83,4 +83,6 @@ public class RepairOrderListDto extends PageInput {
 
     private String code;
 
+    private String com_name;
+
 }

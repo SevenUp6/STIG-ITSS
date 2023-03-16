@@ -79,13 +79,13 @@ public class RepairOrderListVo {
      */
     @JsonProperty("assign_time")
     @Excel(name = "指派时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
-    private String assignTime;
+    private LocalDateTime assignTime;
     /**
      * 维修时间
      */
     @JsonProperty("repair_time")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    private String repairTime;
+    private LocalDateTime repairTime;
     /**
      * 所属设备类型id
      */
