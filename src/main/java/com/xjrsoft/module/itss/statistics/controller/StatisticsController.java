@@ -100,7 +100,7 @@ public class StatisticsController {
 	@GetMapping("/gdmx-data")
 	@ApiOperation(value = "根据传入条件获取工单处理统计报表", notes = "传入设备种类，设备模块,维修时间")
 	public Response<PageOutput<StatisticsGdmxVo>> getGdmxData(RepairOrderListDto listDto) {
-		IPage<RepairOrder> page = repairOrderService.getPageList(listDto);
+		IPage<RepairOrder> page = repairOrderService.getPageList4Statistics(listDto);
 		List<StatisticsGdmxVo> records = BeanUtil.copyList(page.getRecords(), StatisticsGdmxVo.class);
 		// 转换列表数据
 		DataTransUtil.transListShowData(records);
@@ -204,7 +204,7 @@ public void export(HttpServletResponse response,@RequestParam(required=false) St
 	@GetMapping("/gdmx-export")
 	@ApiOperation(value = "工单明细统计导出", notes = "传入设备种类，维修时间")
 	public void clsxExport(HttpServletResponse response,RepairOrderListDto listDto) {
-		IPage<RepairOrder> page = repairOrderService.getPageList(listDto);
+		IPage<RepairOrder> page = repairOrderService.getPageList4Statistics(listDto);
 		List<StatisticsGdmxVo> records = BeanUtil.copyList(page.getRecords(), StatisticsGdmxVo.class);
 		ExcelUtil<StatisticsGdmxVo> util = new ExcelUtil<>(StatisticsGdmxVo.class);
 		Workbook workbook = null;

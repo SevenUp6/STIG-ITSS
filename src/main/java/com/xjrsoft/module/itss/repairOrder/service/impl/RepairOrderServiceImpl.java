@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.xjrsoft.common.page.ConventPage;
+import com.xjrsoft.common.utils.ReflectUtils;
 import com.xjrsoft.core.mp.base.BaseService;
 import com.xjrsoft.core.secure.utils.SecureUtil;
 import com.xjrsoft.core.tool.utils.StringUtil;
@@ -18,6 +19,8 @@ import com.xjrsoft.module.itss.repairOrder.mapper.RepairOrderMapper;
 import com.xjrsoft.module.itss.repairOrder.service.IRepairOrderService;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,6 +37,9 @@ import java.util.List;
 public class RepairOrderServiceImpl extends BaseService<RepairOrderMapper, RepairOrder> implements IRepairOrderService {
 
 	private  IXjrBaseRoleService roleService;
+
+	private static Logger logger = LoggerFactory.getLogger(RepairOrderServiceImpl.class);
+
 
 	@Override
 	public IPage<RepairOrder> getPageList(RepairOrderListDto pageListDto) {
@@ -127,6 +133,10 @@ public class RepairOrderServiceImpl extends BaseService<RepairOrderMapper, Repai
 	@Override
 	public boolean updateRepairOrder(String id, RepairOrder repairOrder) {
 		repairOrder.setId(id);
+		logger.info("更新工单信息，id："+id+";状态："+repairOrder.getStatus());
+		if(9==repairOrder.getStatus()){
+			repairOrder.setRepairTime(LocalDateTime.now());
+		}
 		return this.updateById(repairOrder);
 	}
 
@@ -144,17 +154,19 @@ public class RepairOrderServiceImpl extends BaseService<RepairOrderMapper, Repai
 	public boolean updateStatusById(String id,int status,String fauid,String fauname ,
 									String resultdes,String machine_sn,String handle_type,String reason){
 		UpdateWrapper<RepairOrder> updateWrapper = new UpdateWrapper<>();
+		logger.info("更新工单状态，id："+id+";状态："+status);
 		updateWrapper.set("status",status );
 		if(!StringUtil.isEmpty(fauid)&&!StringUtil.isEmpty(fauname)){
 			updateWrapper.set("fau_id",fauid );
 			updateWrapper.set("fau_name",fauname );
 		}
 		if(9==status){
-			updateWrapper.set("repair_time", LocalDateTime.now());
 			updateWrapper.set("result_des", resultdes);
+			updateWrapper.set("repair_time", LocalDateTime.now());
 			updateWrapper.set("machine_sn", machine_sn);
 			updateWrapper.set("handle_type", Integer.parseInt(handle_type));
 			updateWrapper.set("reason", Integer.parseInt(reason));
+			logger.info("更新工单已完成状态，id："+id+";状态："+status);
 		}else {
 			updateWrapper.set("updated_time", LocalDateTime.now());
 		}
@@ -177,4 +189,29 @@ public class RepairOrderServiceImpl extends BaseService<RepairOrderMapper, Repai
 		}
 		return isAdminRole;
 	}
+
+	public IPage<RepairOrder> getPageList4Statistics(RepairOrderListDto pageListDto) {
+		LambdaQueryWrapper  <RepairOrder> wrapper;
+			wrapper = Wrappers.<RepairOrder>query().lambda().eq(!StringUtil.isEmpty(pageListDto.getIsurgent()), RepairOrder::getIsurgent, pageListDto.getIsurgent())
+					.eq(!StringUtil.isEmpty(pageListDto.getCode()), RepairOrder::getCode, pageListDto.getCode())
+					.eq(!StringUtil.isEmpty(pageListDto.getStatus()), RepairOrder::getStatus, pageListDto.getStatus())
+					.like(!StringUtil.isEmpty(pageListDto.getReport_name()), RepairOrder::getReportName, pageListDto.getReport_name())
+					.like(!StringUtil.isEmpty(pageListDto.getReport_phone()), RepairOrder::getReportPhone, pageListDto.getReport_phone())
+					.like(!StringUtil.isEmpty(pageListDto.getCreated_time()), RepairOrder::getCreatedTime, pageListDto.getCreated_time())
+					.like(!StringUtil.isEmpty(pageListDto.getRepair_usrname()), RepairOrder::getRepairUsrname, pageListDto.getRepair_usrname())
+					.ge(!StringUtil.isEmpty(pageListDto.getStart()), RepairOrder::getRepairTime, pageListDto.getStart())
+					.le(!StringUtil.isEmpty(pageListDto.getEnd()), RepairOrder::getRepairTime, pageListDto.getEnd())
+					.like(!StringUtil.isEmpty(pageListDto.getType_name()), RepairOrder::getTypeName, pageListDto.getType_name())
+					.like(!StringUtil.isEmpty(pageListDto.getMod_name()), RepairOrder::getModName, pageListDto.getMod_name())
+					.like(!StringUtil.isEmpty(pageListDto.getFau_name()), RepairOrder::getFauName, pageListDto.getFau_name())
+					.eq(!StringUtil.isEmpty(pageListDto.getHandle_type()), RepairOrder::getHandleType, pageListDto.getHandle_type())
+					.eq(!StringUtil.isEmpty(pageListDto.getCom_name()), RepairOrder::getComName, pageListDto.getCom_name())
+			;
+
+			wrapper.ne(RepairOrder::getRepairUsrid, "software").eq(!StringUtil.isEmpty(pageListDto.getReason()), RepairOrder::getReason, pageListDto.getReason()).orderByAsc(RepairOrder::getStatus).orderByDesc(RepairOrder::getIsurgent, RepairOrder::getAssignTime);
+
+
+		return this.page(ConventPage.getPage(pageListDto), wrapper);
+	}
+
 }

@@ -87,7 +87,7 @@ public class RepairOrderController {
 	@GetMapping()
 	@ApiOperation(value = "分页", notes = "传入repairOrder")
 	public Response<PageOutput<RepairOrderListVo>> getPageList(@RequestParam( value="type", required=false) String type,RepairOrderListDto listDto) {
-		String userId = SecureUtil.getUserId();
+ 		String userId = SecureUtil.getUserId();
 		listDto.setCreated_by(userId);
 		listDto.setRepair_usrid(userId);
 		if("software"==type || "software".equals(type)){

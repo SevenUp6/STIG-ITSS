@@ -20,6 +20,7 @@ public interface IRepairOrderService extends IService<RepairOrder> {
 	 * @return
 	 */
 	IPage<RepairOrder> getPageList(RepairOrderListDto pageListDto);
+	IPage<RepairOrder> getPageList4Statistics(RepairOrderListDto pageListDto);
 
 	IPage<RepairOrder> getDataList(RepairOrderDto repairOrderDto);
 	boolean addRepairOrder(RepairOrder repairOrder);

@@ -85,4 +85,8 @@ public class RepairOrderListDto extends PageInput {
 
     private String com_name;
 
+    private String start;  //维修时间起
+
+    private String end;     //维修时间止
+
 }
