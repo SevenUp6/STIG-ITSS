@@ -82,7 +82,7 @@ public class MachineModuleController {
 //		List<FaultType> faultTypeList = BeanUtil.copyList(faultTypeDtoList, FaultType.class);
 		List typelist=machineModuleService.getListByNamePid(machineModule.getTypeId(),machineModule.getModName());
 		if(null !=typelist && typelist.size()>0){
-			return Response.notOk(1002,"保存失败，已存在相同的设备模块名称【"+"】");
+			return Response.notOk(1002,"保存失败，已存在相同的设备模块名称【"+machineModule.getModName()+"】");
 		}
 		boolean isSuccess = machineModuleService.addMachineModule(machineModule, null);
 		return Response.status(isSuccess);

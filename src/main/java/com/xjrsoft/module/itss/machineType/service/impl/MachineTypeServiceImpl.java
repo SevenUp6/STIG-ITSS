@@ -1,7 +1,6 @@
 package com.xjrsoft.module.itss.machineType.service.impl;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.xjrsoft.common.serializers.LocalDateTimeDeserializer;
 import com.xjrsoft.core.secure.utils.SecureUtil;
 import com.xjrsoft.core.tool.utils.StringUtil;
 import com.xjrsoft.module.itss.machineType.entity.MachineType;
@@ -13,18 +12,14 @@ import com.xjrsoft.module.itss.machineType.mapper.MachineModuleMapper;
 import com.xjrsoft.module.itss.machineType.dto.MachineTypeListDto;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xjrsoft.common.page.ConventPage;
-import com.xjrsoft.common.page.PageOutput;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import com.xjrsoft.module.itss.machineType.mapper.MachineTypeMapper;
 import com.xjrsoft.module.itss.machineType.service.IMachineTypeService;
 import com.xjrsoft.core.mp.base.BaseService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 
 /**
  * 设备种类表 服务实现类
@@ -86,6 +81,11 @@ public class MachineTypeServiceImpl extends BaseService<MachineTypeMapper, Machi
 
 	public List<MachineType> getListByName(String name){
 		Wrapper wrapper = Wrappers.<MachineType>query().lambda().eq(!StringUtil.isEmpty(name),MachineType::getMachName, name);
+		return this.list(wrapper);
+	}
+
+	public List getList(){
+		Wrapper wrapper = Wrappers.<MachineType>query().lambda();
 		return this.list(wrapper);
 	}
 }

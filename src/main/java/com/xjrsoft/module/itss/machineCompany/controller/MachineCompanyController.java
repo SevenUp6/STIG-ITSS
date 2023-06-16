@@ -105,7 +105,7 @@ public class MachineCompanyController {
 		MachineCompany machineCompany = BeanUtil.copy(machineCompanyDto, MachineCompany.class);
 		List companylist=machineCompanyService.getListByName(machineCompany.getComName());
 		if(null !=companylist && companylist.size()>0){
-			return Response.notOk(1002,"保存失败，已存在相同的公司名称【"+"】");
+			return Response.notOk(1002,"保存失败，已存在相同的公司名称【"+machineCompany.getComName()+"】");
 		}
 		return Response.status(machineCompanyService.updateMachineCompany(id, machineCompany));
 	}

@@ -5,7 +5,6 @@ import com.xjrsoft.module.itss.machineType.entity.FaultType;
 import com.xjrsoft.module.itss.machineType.entity.MachineModule;
 import com.xjrsoft.module.itss.machineType.dto.MachineTypeListDto;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.xjrsoft.common.page.PageOutput;
 import java.util.List;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -25,6 +24,7 @@ public interface IMachineTypeService extends IService<MachineType> {
 	IPage<MachineType> getPageList(MachineTypeListDto pageListDto);
 
 	List  getListByName(String name);
+	List getList();
 
 	List<FaultType> getFaultTypeByParentId(String parentId);
 
