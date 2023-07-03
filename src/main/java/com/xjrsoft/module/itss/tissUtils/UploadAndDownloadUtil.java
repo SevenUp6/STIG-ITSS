@@ -39,12 +39,13 @@ public class UploadAndDownloadUtil {
     @GetMapping("/getQRCode")
     public AjaxResult getWebQR() {
         AjaxResult ajax = AjaxResult.success();
-        String url = "http://8.142.92.214:2828/annexes-files/001APK";
+        String url = "http://127.0.0.1:2828/annexes-files/001APK";
         BufferedImage image = QRCodeUtil.createImage("utf-8", url, 300, 300);
         QRCodeUtil.addUpFont(image, "光华科技运维平台安卓APP下载");
         String imagePath = null;
         String path = null;
-        File file = new File("C:\\WorkSpace\\temp\\static\\uploadFiles\\qrcode.JPEG");
+//        File file = new File("C:\\WorkSpace\\temp\\static\\uploadFiles\\qrcode.JPEG");
+        File file = new File("/home/target/static/uploadFiles/APK/qrcode.JPEG");
         try {
 
             if (!file.isDirectory()) {
